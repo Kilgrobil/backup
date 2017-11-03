@@ -14,6 +14,7 @@
 \usepackage{proof}
 \usepackage{tikz}
 \usetikzlibrary{matrix}
+\usetikzlibrary{decorations.pathmorphing}
 
 \setlength\parindent{0pt}
 
@@ -37,7 +38,9 @@
 \newcommand{\V}{\mathcal{V}}
 \newcommand{\lb}{\llbracket}
 \newcommand{\rb}{\rrbracket}
-
+\newcommand{\info}[1]{\text{{\fontfamily{lmss}\selectfont #1}}}
+\newcommand{\Mod}{\info{Mod}}
+\newcommand{\Sen}{\info{Sen}}
 \usepackage[bitstream-charter]{mathdesign}
 
 
@@ -76,7 +79,7 @@ On notera désormais $X \in |\gr{C}|$ pour dire que $X$ est un objet de $\gr{C}$
 \item La catégorie $\gr{Meas}$ a pour objets les espaces mesurables $(X,\Sigma)$ i.e. $X$ est un ensemble et $\Sigma \subseteq P(X)$ est une tribu. Les morphismes sont les fonctions mesurables. Les morphismes identité sont les fonctions identité, et la composition est la composition usuelle des fonctions.
 \end{itemize}
 On peut définir des concepts omniprésents en mathématiques dans la vision catégorique. Par exemple, une catégorie $\gr{C}$ a des produits si pour tous objets $X,Y$ il existe un objet $X \times Y$ vérifiant certaines propriétés (analogues à celles du produit cartésien dans $\gr{Set}$). De même pour des notions comme la somme $X + Y$, l'exponentielle $Y^X$. Un exemple élaboré provenant de l'informatique est celui des catégories cartésiennes closes (CCC). Une CCC est une catégorie qui a des produits, des exponentielles, et un objet final $F$ (c'est-à-dire que pour tout objet $X$, il existe un unique morphisme $f_X : X \to F$). Les CCC permettent de donner des interprétations au $\lambda$-calcul simplement typé ; en effet, dans une CCC, il y a un sens à dire que $X \times Y \to Z \cong X \to Z^Y$ (curryfication).\\\\
-Jusqu'à présent, les catégories ont l'air d'être assez disjointes les unes des autres. On peut en fait les munir de transformations du type $\gr{C} \to \gr{D}$, nommées \il{foncteurs}.
+Jusqu'à présent, les catégories ont l'air d'être isolées les unes des autres. On peut en fait les munir de transformations du type $\gr{C} \to \gr{D}$, nommées \il{foncteurs}.
 \begin{defi}[Foncteur]
 Soient $\gr{C},\gr{D}$ deux catégories. Un foncteur (ou foncteur covariant) $F : \gr{C} \to \gr{D}$ est une application qui associe à chaque objet $X \in \gr{C}$ un objet $F(X) \in \gr{D}$, à chaque $\gr{C}$-morphisme $f : X \to Y$ un $\gr{D}$-morphisme $F(f) : F(X) \to F(Y)$, et tel que $F(id_X) = id_{F(X)}$ et $F(g \circ f) = F(g) \circ F(f)$. 
 \end{defi}
@@ -97,6 +100,7 @@ Si $\gr{C} = \gr{D}$, on dit que $F$ est un \il{endofoncteur}.\\\\
 \gr{Exemples.} On donne quelques exemples de foncteurs utiles.\begin{itemize}
 \setlength\itemsep{-0.3em}
 \item L'endofoncteur des parties $P : \gr{Set} \to \gr{Set}$ associe à un ensemble $X$ l'ensemble de ses parties $P(X)$, et à une fonction $f : X \to Y$ la fonction $P(f) : P(X) \to P(Y)$ définie par $P(f)(S) = f(S)$ (il s'agit de l'image directe $\{ y \in Y \mid \exists x \in S, f(x) = y \}$).
+\item D'un point de vue plus informatique, l'endofoncteur $\info{List} : \gr{Set} \to \gr{Set}$ associe à $X$ l'ensemble $\info{List}(X) = X^* = \bigcup_{n\in \N} X^n$ des listes à éléments dans $X$. Pour toute fonction $f : X \to Y$, on définit $\info{List}(f) : [x_1,...,x_n] \mapsto [f(x_1),...,f(x_n)]$.
 \item Pour toute catégorie $\gr{C}$, on peut définir l'endofoncteur identité $Id_\gr{C} : \gr{C} \to \gr{C}$ par $Id_\gr{C}(X) = X$ et $Id_\gr{C}(f) = f$.
 \item Soit $\gr{C}$ une catégorie et $C \in |\gr{C}|$. L'endofoncteur constant $\overline{C} : \gr{C} \to \gr{C}$ est défini par $\overline{C}(X) = C$ et $\overline{C}(f) = id_C$. (On pourrait changer la catégorie de départ en n'importe quelle autre catégorie $\gr{D}$.)
 \item Soit $\U : \gr{Grp} \to \gr{Set}$ le foncteur défini par $\U(G) = |G|$ (l'ensemble sous-jacent du groupe $G$) et $\U(f) = |f|$ (la fonction sous-jacente du morphisme de groupes $f$). Ce foncteur est appelé foncteur d'oubli. Plus généralement, il y a des foncteurs d'oubli $\gr{Vect} \to \gr{Set}$, $\gr{Met} \to \gr{Set}$, $\gr{Top} \to \gr{Set}$, $\gr{Meas} \to \gr{Set}$, etc. qui associent tous à un ensemble muni d'une structure l'ensemble sous-jacent.
@@ -110,7 +114,7 @@ Une catégorie $\gr{C}$ est concrète si elle est équipée d'un foncteur fidèl
 \end{itemize}
 On a vu qu'il existe des transformations entre catégories, nommées foncteurs. \'Evidemment, les mathématiciens se sont aussi empressés de définir des transformations entre foncteurs, appelées \il{transformations naturelles}.
 \begin{defi}[Transformation naturelle]
-Soit $F,G : \gr{C} \to \gr{D}$ deux foncteurs. Une transformation naturelle $\lambda$ consiste en la donnée, pour tout $X \in \gr{C}$, d'un foncteur $\lambda_X : F(X) \to G(X)$. Ces foncteurs sont tels que pour tout $f : X \to Y$, le diagramme suivant commute :
+Soit $F,G : \gr{C} \to \gr{D}$ deux foncteurs. Une transformation naturelle $\lambda : F \Rightarrow G$ consiste en la donnée, pour tout $X \in \gr{C}$, d'un morphisme $\lambda_X : F(X) \to G(X)$. Ces morphismes sont tels que pour tout $f : X \to Y$, le diagramme suivant commute :
 \begin{center}
 \begin{tikzpicture}
   \matrix (m) [matrix of math nodes,row sep=3em,column sep=4em,minimum width=2em]
@@ -125,24 +129,70 @@ Soit $F,G : \gr{C} \to \gr{D}$ deux foncteurs. Une transformation naturelle $\la
 \end{tikzpicture}
 \end{center}
 \end{defi}
+\gr{Exemples.} \begin{itemize}
+\item Soit $\gr{C}$ une catégorie. La transformation naturelle identité $\mathbb{I} : Id_\gr{C} \Rightarrow Id_\gr{C}$ est définie par la donnée, pour tout objet $X \in |\gr{C}|$, du morphisme $\mathbb{I}_X = id_X$. La naturalité vient du fait que par définition de l'identité, on a pour tout $f : X \to Y$ que $id_Y \circ f = f \circ id_X$.
+\item Dans $\gr{Set}$, on peut définir deux transformations naturelles élémentaires. La transformation singleton $\eta : Id_\gr{Set} \Rightarrow P$ est définie pour tout ensemble $X$ par
+\begin{align*}
+\eta_X : X & \to P(X) \\
+x & \mapsto \{ x \}
+\end{align*}
+La naturalité vient du fait que $\{ f(x) \} = f(\{x\})$. La transformation union $\mu : PP \Rightarrow P$ est définie pour tout ensemble $X$ par
+\begin{align*}
+\mu_X : P(P(X)) & \to P(X) \\
+\U & \mapsto \bigcup_{U \in \U} U
+\end{align*}
+La naturalité vient du fait que $\bigcup_{U\in \U} f(U) = f\left(\bigcup_{U \in \U} U\right)$. Le triplet $(P,\eta,\mu)$ vérifie en fait des conditions supplémentaires qui en font une \il{monade}, objet souvent utilisé en informatique pour modéliser des comportements branchants.
+\item On peut définir une monade similaire en remplaçant les ensembles par des listes :
+\begin{align*}
+ \eta_X : X & \to \info{List}(X) & \mu_X : \info{List}(\info{List}(X)) & \to \info{List}(X)  \\
+ x & \mapsto [x] & [[x_{1,1},...,x_{1,k_1}],...,[x_{n,1},...,x_{n,k_n}]] & \mapsto [x_{1,1},...,x_{1,k_1},...,x_{n,1},...,x_{n,k_n}]
+\end{align*}
+\item Intuitivement, les transformations naturelles sont des morphismes de foncteurs. Ceci est formalisé par la construction suivante. Soit $\gr{C},\gr{D}$ deux catégories, on définit la catégorie de foncteurs $\gr{D}^\gr{C}$. Ses objets sont les foncteurs $\gr{C} \to \gr{D}$ et ses morphismes sont les transformations naturelles. Les morphismes identité sont définis par $(id_F)_X = id_{FX}$, et la composition de $\alpha : F \to G$ et $\beta : G \to H$ est définie par $(\beta \circ \alpha)_X = \beta_X \circ \alpha_X$. (En réalité, il y a des conditions supplémentaires à imposer sur $\gr{C}$ et $\gr{D}$ pour ne pas avoir de problèmes de classes propres.)
+\end{itemize}
 \newpage
 \section{Institutions}
+Une institution est la formalisation de ce qu'est une logique sous ses aspects sémantiques. 
 \begin{defi}[Institution]
 Une institution $\I$ est la donnée :
 \begin{itemize}
 \setlength\itemsep{-0.3em}
 \itemz D'une catégorie $\gr{Sig}$ dont les objets sont appelés signatures et dénotés $\Sigma$.
-\itemz D'un foncteur $Sen : \gr{Sig} \to \gr{Set}$. Les éléments de $Sen (\Sigma)$ sont appelés formules.
-\itemz D'un foncteur contravariant $Mod : \gr{Sig} \to \gr{Cat}$. Les objets et les morphismes de $Mod(\Sigma)$ sont respectivement appelés des $\Sigma$-modèles et des $\Sigma$-morphismes.
-\itemz D'une famille de relations $\models_\Sigma \subseteq Mod\Sigma \times Sen\Sigma$ indexée par $\gr{Sig}$, appelées relations de satisfaction, telle que la condition de satisfaction suivante est vérifiée pour tout $\sigma : \Sigma \to \Sigma'$, tout $M' \in Mod(\Sigma)$ et tout $\ph \in Sen(\Sigma)$ :
-\[ M' \models_{\Sigma'} Sen(\sigma)(\ph) \iff Mod(\sigma)(M') \models_{\Sigma} \ph \]
+\itemz D'un foncteur $\Sen : \gr{Sig} \to \gr{Set}$. Les éléments de $\Sen (\Sigma)$ sont appelés formules.
+\itemz D'un foncteur contravariant $\Mod : \gr{Sig} \to \gr{Cat}$. Les objets et les morphismes de $\Mod(\Sigma)$ sont respectivement appelés des $\Sigma$-modèles et des $\Sigma$-morphismes.
+\itemz D'une famille de relations $\models_\Sigma \subseteq \Mod(\Sigma) \times \Sen(\Sigma)$ indexée par $\gr{Sig}$, appelées relations de satisfaction, telle que la condition de satisfaction suivante est vérifiée pour tout $\sigma : \Sigma \to \Sigma'$, tout $M' \in \Mod(\Sigma')$ et tout $\ph \in \Sen(\Sigma)$ :
+\begin{equation} M' \models_{\Sigma'} \Sen(\sigma)(\ph) \iff \Mod(\sigma)(M') \models_{\Sigma} \ph \label{condsat} \tag{$\ast$} \end{equation}
 \end{itemize}
 \end{defi}
-Une institution est la formalisation de ce qu'est une logique sous ses aspects sémantiques. On peut citer les exemples suivants.\\\\
+La représentation suivante donne une idée plus claire des liens entre les différents constituants d'une institution.
+\begin{center}
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes,row sep=3em,column sep=4em,minimum width=2em]
+  {
+     \Sigma & \Mod(\Sigma) & \_ \models_\Sigma \_ & \Sen(\Sigma)  \\
+     \Sigma' & \Mod(\Sigma') & \_ \models_{\Sigma'} \_ & \Sen(\Sigma') \\};
+  \path[-stealth]
+    (m-1-1) edge node [left] {$\sigma$} (m-2-1)
+    (m-2-2) edge node [left] {$\Mod(\sigma)$} (m-1-2)
+    (m-1-2) edge [dashed] (m-1-3)
+    (m-1-4) edge [dashed] (m-1-3)
+    (m-2-2) edge [dashed] (m-2-3)
+    (m-2-4) edge [dashed] (m-2-3)
+    (m-1-4) edge node [right] {$\Sen(\sigma)$} (m-2-4);
+   \draw[<->,line join=round,
+decorate, decoration={
+    zigzag,
+    segment length=4,
+    amplitude=.9,post=lineto,
+    post length=2pt
+}]
+    (m-1-3) -- (m-2-3) node[midway,left] {\eqref{condsat}};
+\end{tikzpicture}
+\end{center}
+On peut citer les exemples suivants d'institutions.\\\\
 \gr{Logique propositionnelle ($\gr{PL}$).} L'institution $\gr{PL}$ est définie par :
 \begin{itemize}
-\itemz La catégorie des signatures est $\gr{Set}$. Les éléments d'un $P \in \gr{Set}$ seront appelées variables propositionnelles.
-\itemz Le foncteur $Sen : \gr{Set} \to \gr{Set}$ associe à $P$ l'ensemble des formules (finies) à variables dans $P$ et utilisant uniquement les connecteurs Booléens $\neg, \wedge, \vee, \Rightarrow$. Autrement dit, $Sen(P)$ est le plus petit ensemble de formules $\Phi$ tel que
+\itemz La catégorie des signatures est $\gr{Set}$. Les éléments d'un $P \in |\gr{Set}|$ seront appelées variables propositionnelles.
+\itemz Le foncteur $\Sen : \gr{Set} \to \gr{Set}$ associe à $P$ l'ensemble des formules (finies) à variables dans $P$ et utilisant uniquement les connecteurs Booléens $\neg, \wedge, \vee, \Rightarrow$. Autrement dit, $\Sen(P)$ est le plus petit ensemble de formules $\Phi$ tel que
 $$
 \infer{p \in \Phi}{p \in P}
 \qquad
@@ -154,15 +204,15 @@ $$
 \qquad
 \infer{\ph \Rightarrow \psi \in \Phi}{\ph \in \Phi & \psi \in \Phi }
 $$
-Soit $\sigma : P \to P'$ un morphisme. Le morphisme $Sen(\sigma)$ associe à toute formule propositionnelle $\ph \in Sen(P)$ la formule $Sen(\sigma)(\ph) = \ph(p \mapsto \sigma(p))$ i.e. la formule $\ph$ après renommage des variables selon $\sigma$. On peut vérifier que $Sen$ est bien un foncteur, en effet :
+Soit $\sigma : P \to P'$ un morphisme. Le morphisme $\Sen(\sigma)$ associe à toute formule propositionnelle $\ph \in \Sen(P)$ la formule $\Sen(\sigma)(\ph) = \ph(p \mapsto \sigma(p))$ i.e. la formule $\ph$ après renommage des variables selon $\sigma$. On peut vérifier que $\Sen$ est bien un foncteur, en effet :
 \begin{align*}
- (Sen(\sigma') \circ Sen(\sigma)) (\ph) & = \ph(p \mapsto \sigma(p))(p' \mapsto \sigma'(p')) \\ & = \ph(p \mapsto (\sigma' \circ \sigma)(p)) \\ & = Sen(\sigma' \circ \sigma)(\ph) 
+ (\Sen(\sigma') \circ \Sen(\sigma)) (\ph) & = \ph(p \mapsto \sigma(p))(p' \mapsto \sigma'(p')) \\ & = \ph(p \mapsto (\sigma' \circ \sigma)(p)) \\ & = \Sen(\sigma' \circ \sigma)(\ph) 
  \end{align*}
-On notera désormais $\sigma(\ph)$ pour $Sen(\sigma)(\ph)$.
-\itemz Le foncteur contravariant $Mod : \gr{Set} \to \gr{Cat}$ associe à un ensemble $P$ la catégorie $(\{0,1\}^P, \leq)$. Ses objets sont les valuations $\nu : P \to \{0,1\}$. Lorsque $\nu \leq \nu'$ en tout point de $P$, on se donne un morphisme $\nu \to \nu'$. Par réflexivité, il y a donc des morphismes identité. La composition est $\nu \to \nu' \to \nu'' = \nu \to \nu''$, bien définie par transitivité. L'unicité de chaque morphisme $\nu \to \nu'$ donne automatiquement les conditions $(ii)$ et $(iii)$.\\\\
-Soit $\sigma : P \to P'$ un morphisme. On définit $Mod(\sigma)(\nu') = \nu' \circ \sigma$. Vérifions que $Mod$ est bien un foncteur contravariant. Soit $\sigma : P \to P', \sigma' : P' \to P''$. Alors
+On notera désormais $\sigma(\ph)$ pour $\Sen(\sigma)(\ph)$.
+\itemz Le foncteur contravariant $\Mod : \gr{Set} \to \gr{Cat}$ associe à un ensemble $P$ la catégorie $(\{0,1\}^P, \leq)$. Ses objets sont les valuations $\nu : P \to \{0,1\}$. Lorsque $\nu \leq \nu'$ en tout point de $P$, on se donne un morphisme $\nu \to \nu'$. Par réflexivité, il y a donc des morphismes identité. La composition est $\nu \to \nu' \to \nu'' = \nu \to \nu''$, bien définie par transitivité. L'unicité de chaque morphisme $\nu \to \nu'$ donne automatiquement les conditions $(ii)$ et $(iii)$.\\\\
+Soit $\sigma : P \to P'$ un morphisme. On définit $\Mod(\sigma)(\nu') = \nu' \circ \sigma$. Vérifions que $\Mod$ est bien un foncteur contravariant. Soit $\sigma : P \to P', \sigma' : P' \to P''$. Alors
 \begin{align*}
-(Mod(\sigma) \circ Mod(\sigma'))(\nu'') = \nu'' \circ \sigma' \circ \sigma = Mod(\sigma' \circ \sigma)(\nu'')
+(\Mod(\sigma) \circ \Mod(\sigma'))(\nu'') = \nu'' \circ \sigma' \circ \sigma = \Mod(\sigma' \circ \sigma)(\nu'')
 \end{align*}
 \itemz On dit que $\nu \models_P \ph$ si et seulement si la valuation $\nu$ satisfait la formule propositionnelle $\ph$ à variables dans $P$, avec la convention que $0$ et $1$ représentent respectivement le faux et le vrai. La condition de satisfaction
 \begin{align*}
@@ -189,7 +239,7 @@ $$
 \qquad
 \infer{f(t_1...t_n) \in \T}{f \in \F_n & t_1 \in \T & ... & t_n \in \T}
 $$
-L'ensemble des formules atomiques $\Phi^{at}$ est défini comme étant l'ensemble des formules de la forme $R(t_1...t_n)$ où $R \in \R_n$ et $t_1...t_n \in \T$. Le foncteur $Sen : \gr{Sig} \to \gr{Set}$ associe à $\La$ le plus petit ensemble de formules $\Phi$ tel que
+L'ensemble des formules atomiques $\Phi^{at}$ est défini comme étant l'ensemble des formules de la forme $R(t_1...t_n)$ où $R \in \R_n$ et $t_1...t_n \in \T$. Le foncteur $\Sen : \gr{Sig} \to \gr{Set}$ associe à $\La$ le plus petit ensemble de formules $\Phi$ tel que
 $$
 \infer{\ph \in \Phi}{\ph \in \Phi^{at}}
 \qquad
@@ -206,8 +256,8 @@ $$
 \qquad
 \infer{\exists v \ph \in \Phi}{v \in \V & \ph \in \Phi}
 $$
-Soit $\sigma : \La \to \La'$ un morphisme de signatures, alors $Sen(\sigma)$ est le renommage selon $\sigma$, défini inductivement sur les termes par les relations $Sen(\sigma)(v) = v$, $Sen(\sigma)(c) = \sigma(c)$ puis $Sen(\sigma)(f(t_1...t_n)) = \sigma(f)(Sen(\sigma)(t_1)...Sen(\sigma)(t_n))$ ; étendu aux formules atomiques en posant $Sen(\sigma)(R(t_1...t_n)) = \sigma(R)(Sen(\sigma)(t_1)...Sen(\sigma)(t_n))$ et enfin étendu à toutes les formules. Il est facile de voir que $Sen$ est bien un foncteur. On notera également $\sigma(\ph)$ pour $Sen(\sigma)(\ph)$.
-\itemz Le foncteur contravariant $Mod : \gr{Sig} \to \gr{Cat}$ associe à une signature $\La = (\C, \F, \R)$ la catégorie $Mod(\La)$ des modèles de la forme $\M = (M, \C^\M, \F^\M, \R^\M)$ constitués :
+Soit $\sigma : \La \to \La'$ un morphisme de signatures, alors $\Sen(\sigma)$ est le renommage selon $\sigma$, défini inductivement sur les termes par les relations $\Sen(\sigma)(v) = v$, $\Sen(\sigma)(c) = \sigma(c)$ puis $\Sen(\sigma)(f(t_1...t_n)) = \sigma(f)(\Sen(\sigma)(t_1)...\Sen(\sigma)(t_n))$ ; étendu aux formules atomiques en posant $\Sen(\sigma)(R(t_1...t_n)) = \sigma(R)(\Sen(\sigma)(t_1)...\Sen(\sigma)(t_n))$ et enfin étendu à toutes les formules. Il est facile de voir que $\Sen$ est bien un foncteur. On notera également $\sigma(\ph)$ pour $\Sen(\sigma)(\ph)$.
+\itemz Le foncteur contravariant $\Mod : \gr{Sig} \to \gr{Cat}$ associe à une signature $\La = (\C, \F, \R)$ la catégorie $\Mod(\La)$ des modèles de la forme $\M = (M, \C^\M, \F^\M, \R^\M)$ constitués :
 \begin{itemize}
 \setlength\itemsep{-0.3em}
 \item D'un ensemble $M$.
@@ -222,13 +272,13 @@ Un morphisme $h : \M \to \M'$ est une fonction $h : M \to M'$ telle que
 \item[(ii)] Pour tout $f \in \F_n$ et tous $a_1...a_n \in M$, $h(f^\M(a_1...a_n)) = f^{\M'}(h(a_1)...h(a_n))$.
 \item[(iii)] Pour tout $R \in \R_n$ et tous $a_1...a_n \in M$, on a $R^\M(a_1...a_n) \Rightarrow R^{\M'}(h(a_1)...h(a_n))$.
 \end{enumerate}
-La composition est la composition usuelle des fonctions, ce qui fait de $Mod(\La)$ une catégorie. \`A présent, étant donné un morphisme $\sigma : \La \to \La'$, on définit $Mod(\sigma)(\M') = \M = (M, \C^\M, \F^\M, \R^\M)$ par $M = M'$, $c^\M = \sigma(c)^{\M'}$, $f^\M = \sigma(f)^{\M'}$ et $R^\M = \sigma(R)^{\M'}$. Soit $\M_1 = Mod(\sigma' \circ \sigma)(\M'')$ et $\M_2 = (Mod(\sigma) \circ Mod(\sigma'))(\M'')$. Alors $M_1 = M'' = M_2$ et pour tout $c \in \C$ on a :
+La composition est la composition usuelle des fonctions, ce qui fait de $\Mod(\La)$ une catégorie. \`A présent, étant donné un morphisme $\sigma : \La \to \La'$, on définit $\Mod(\sigma)(\M') = \M = (M, \C^\M, \F^\M, \R^\M)$ par $M = M'$, $c^\M = \sigma(c)^{\M'}$, $f^\M = \sigma(f)^{\M'}$ et $R^\M = \sigma(R)^{\M'}$. Soit $\M_1 = \Mod(\sigma' \circ \sigma)(\M'')$ et $\M_2 = (\Mod(\sigma) \circ \Mod(\sigma'))(\M'')$. Alors $M_1 = M'' = M_2$ et pour tout $c \in \C$ on a :
 \[ c^{\M_1} = (\sigma' \circ \sigma)(c)^{\M''} = \sigma'(\sigma(c))^{\M''} = \sigma(c)^{\M'} = c^{\M_2} \]
 De même, on montre que $f^{\M_1} = f^{\M_2}$ et $R^{\M_1} = R^{\M_2}$, d'où $\M_1 = \M_2$.
 \itemz Enfin, étant donné une signature $\La$, on définit $\models_\La$ par la satisfaction usuelle du premier ordre après avoir quantifié universellement sur les variables libres. Autrement dit, si $\ph = \ph(x_1...x_n)$, on définit $\M \models_{\La} \ph$ par
 $$ \forall a_1...a_n \in M^n, \M \models_\La \ph[a_1...a_n]$$
 La condition de satisfaction est
-$$ \M' \models_{\La'} Sen(\sigma)(\ph) \iff Mod(\sigma)(\M') \models_\La \ph$$
+$$ \M' \models_{\La'} \Sen(\sigma)(\ph) \iff \Mod(\sigma)(\M') \models_\La \ph$$
 \end{itemize}
 Parmi les autres institutions connues, il y a la logique modale propositionnelle $\gr{MPL}$ et ses généralisations métrique $\gr{MMPL}$ et topologique $\gr{TMPL}$. Tout comme pour $\gr{FOL}^\gr{1}$, la définition de la relation de satisfaction n'est pas naturelle : l'absence de notion d'état force à quantifier universellement. On aimerait pouvoir dire que $\M \models_{\La} \ph[a_1...a_n]$ seulement pour certains $n$-uples $a_1...a_n$ (dans $\gr{FOL}^\gr{1}$) ou que $(I,W,R) \models_P^i \ph$ seulement pour certains mondes possibles indicés par $J \subsetneq I$ (dans $\gr{MPL}$). Ces considérations ont fait émerger la notion d'institution stratifiée.
 \newpage
@@ -238,21 +288,21 @@ Une institution stratifiée $\I$ est la donnée :
 \begin{itemize}
 \setlength\itemsep{-0.3em}
 \itemz D'une catégorie $\gr{Sig}$.
-\itemz D'un foncteur $Sen : \gr{Sig} \to \gr{Set}$.
-\itemz D'un foncteur contravariant $Mod : \gr{Sig} \to \gr{Cat}$.
+\itemz D'un foncteur $\Sen : \gr{Sig} \to \gr{Set}$.
+\itemz D'un foncteur contravariant $\Mod : \gr{Sig} \to \gr{Cat}$.
 \itemz D'une stratification $\lb - \rb$, c'est-à-dire la donnée : 
 \begin{itemize}
-\item D'une catégorie concrète $\gr{C}$ et pour tout $\Sigma \in \gr{Sig}$, d'un foncteur $\lb - \rb_\Sigma : Mod(\Sigma) \to \gr{C}$.
-\item Pour tout morphisme de signatures $\sigma : \Sigma \to \Sigma'$, d'une transformation naturelle $\lb - \rb_\sigma : \lb - \rb_{\Sigma'} \to \lb - \rb_\Sigma \circ Mod(\sigma)$ telle que pour tout $M' \in Mod(\Sigma')$, la fonction $\U (\lb M' \rb_\sigma) : \U ( \lb M' \rb_{\Sigma'}) \to \U (\lb Mod(\sigma)(M') \rb_\Sigma )$ est surjective. (On omettra d'écrire le foncteur $\U$ dans la suite.)
+\item D'une catégorie concrète $\gr{C}$ et pour tout $\Sigma \in \gr{Sig}$, d'un foncteur $\lb - \rb_\Sigma : \Mod(\Sigma) \to \gr{C}$.
+\item Pour tout morphisme de signatures $\sigma : \Sigma \to \Sigma'$, d'une transformation naturelle $\lb - \rb_\sigma : \lb - \rb_{\Sigma'} \to \lb - \rb_\Sigma \circ \Mod(\sigma)$ telle que pour tout $M' \in \Mod(\Sigma')$, la fonction $\U (\lb M' \rb_\sigma) : \U ( \lb M' \rb_{\Sigma'}) \to \U (\lb \Mod(\sigma)(M') \rb_\Sigma )$ est surjective. (On omettra d'écrire le foncteur $\U$ dans la suite.)
 \end{itemize}
-\itemz D'une relation de satisfaction entre modèles et formules paramétrée par les états notée $M \models_\Sigma^\eta \ph$ où $\eta \in \lb M \rb_\Sigma$, telle que pour tous $\sigma : \Sigma \to \Sigma'$, $M' \in Mod(\Sigma')$, $\eta \in \lb M' \rb_{\Sigma'}$, $\ph \in Sen(\Sigma)$, on a l'équivalence
-$$ \left(Mod(\sigma)(M') \models_\Sigma^{\lb M' \rb_\sigma(\eta)} \ph\right) \iff \left(M' \models_{\Sigma'}^\eta Sen(\sigma)(\ph)\right)$$
+\itemz D'une relation de satisfaction entre modèles et formules paramétrée par les états notée $M \models_\Sigma^\eta \ph$ où $\eta \in \lb M \rb_\Sigma$, telle que pour tous $\sigma : \Sigma \to \Sigma'$, $M' \in \Mod(\Sigma')$, $\eta \in \lb M' \rb_{\Sigma'}$, $\ph \in \Sen(\Sigma)$, on a l'équivalence
+$$ \left(\Mod(\sigma)(M') \models_\Sigma^{\lb M' \rb_\sigma(\eta)} \ph\right) \iff \left(M' \models_{\Sigma'}^\eta \Sen(\sigma)(\ph)\right)$$
 \end{itemize}
 \end{defi}
 \gr{Remarques.}
 \begin{itemize}
 \setlength\itemsep{-0.3em}
-\item On peut alors définir la relation de satisfaction $\models_\Sigma \subseteq Mod(\Sigma) \times Sen(\Sigma)$ en disant que $M \models_\Sigma \ph$ si et seulement si $M \models_\Sigma^\eta \ph$ pour tout $\eta \in \lb M \rb_\Sigma$.
+\item On peut alors définir la relation de satisfaction $\models_\Sigma \subseteq \Mod(\Sigma) \times \Sen(\Sigma)$ en disant que $M \models_\Sigma \ph$ si et seulement si $M \models_\Sigma^\eta \ph$ pour tout $\eta \in \lb M \rb_\Sigma$.
 \item On notera désormais $\lb M \rb_\Sigma (\ph) = \{ \eta \in \lb M \rb_\Sigma \mid M \models_\Sigma^\eta \ph \}$. On a donc l'équivalence $M \models_\Sigma \ph \iff \lb M \rb_\Sigma (\ph) = \lb M \rb_\Sigma$.
 \end{itemize}
 On peut définir à partir des institutions stratifiées des notions générales de connecteurs booléens. Soit $\I$ une institution stratifiée, $\Sigma$ une signature, $M$ un $\Sigma$-modèle. Pour toute $\Sigma$-formule $\ph$, on note ici $\lb \ph \rb = \lb M \rb_\Sigma(\ph)$ et $\lb \top \rb = \lb M \rb_\Sigma$. On dira que
