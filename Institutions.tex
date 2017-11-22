@@ -42,7 +42,9 @@
 \newcommand{\Mod}{\info{Mod}}
 \newcommand{\Sen}{\info{Sen}}
 \usepackage[bitstream-charter]{mathdesign}
-
+%\usepackage[charter]{mathdesign}
+%\usepackage{fontspec}
+%\setmainfont{URW Palladio L}
 
 \begin{document}
 
@@ -188,6 +190,7 @@ decorate, decoration={
     (m-1-3) -- (m-2-3) node[midway,left] {\eqref{condsat}};
 \end{tikzpicture}
 \end{center}
+\subsection{Exemples}
 On peut citer les exemples suivants d'institutions.\\\\
 \gr{Logique propositionnelle ($\gr{PL}$).} L'institution $\gr{PL}$ est définie par :
 \begin{itemize}
@@ -280,7 +283,97 @@ $$ \forall a_1...a_n \in M^n, \M \models_\La \ph[a_1...a_n]$$
 La condition de satisfaction est
 $$ \M' \models_{\La'} \Sen(\sigma)(\ph) \iff \Mod(\sigma)(\M') \models_\La \ph$$
 \end{itemize}
-Parmi les autres institutions connues, il y a la logique modale propositionnelle $\gr{MPL}$ et ses généralisations métrique $\gr{MMPL}$ et topologique $\gr{TMPL}$. Tout comme pour $\gr{FOL}^\gr{1}$, la définition de la relation de satisfaction n'est pas naturelle : l'absence de notion d'état force à quantifier universellement. On aimerait pouvoir dire que $\M \models_{\La} \ph[a_1...a_n]$ seulement pour certains $n$-uples $a_1...a_n$ (dans $\gr{FOL}^\gr{1}$) ou que $(I,W,R) \models_P^i \ph$ seulement pour certains mondes possibles indicés par $J \subsetneq I$ (dans $\gr{MPL}$). Ces considérations ont fait émerger la notion d'institution stratifiée.
+\gr{Modal Propositional Logic ($\gr{MPL}$).} L'institution $\gr{MPL}$ est définie par :
+\begin{itemize}
+\itemz La catégorie des signatures est $\gr{Set}$.
+\itemz Le foncteur $\Sen : \gr{Set} \to \gr{Set}$ associe à une signature $P$ le plus petit ensemble de formules $\Phi$ tel que
+$$
+\infer{p \in \Phi}{p \in P}
+\qquad
+\infer{\neg \ph \in \Phi}{\ph \in \Phi}
+\qquad
+\infer{\ph \wedge \psi \in \Phi}{\ph \in \Phi & \psi \in \Phi }
+\qquad
+\infer{\ph \vee \psi \in \Phi}{\ph \in \Phi & \psi \in \Phi }
+\qquad
+\infer{\ph \Rightarrow \psi \in \Phi}{\ph \in \Phi & \psi \in \Phi }
+$$
+$$
+\infer{\square \ph \in \Phi}{\ph \in P}
+\qquad
+\infer{\lozenge \ph \in \Phi}{\ph \in P}
+$$
+Le morphisme $\Sen(\sigma)$ est encore le renommage selon $\sigma$.
+\itemz Pour un ensemble $P$ donné, $\Mod(P)$ a pour objets les modèles de Kripke $(I,W,R)$, qui comportent
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+\item Un ensemble d'indexation $I$.
+\item Une famille $W = (W_i)_{i\in I}$ de mondes possibles, i.e., de fonctions $P \to \{ 0,1 \}$. Un monde possible peut aussi être vu comme un sous-ensemble de $P$.
+\item Une relation dite d'accessibilité $R \subseteq I \times I$.
+\end{itemize}
+Un morphisme $h : (I,W,R) \to (I',W',R')$ de $\Mod(P)$ est une fonction $h : I \to I'$ telle que $W_i \subseteq W'_{h(i)}$ pour tout $i \in I$. Soit $\sigma : P \to P'$ un renommage, alors le modèle $\Mod(\sigma)((I',W',R'))$ est $(I,W,R)$ défini par $I = I'$, $R = R'$, et $W_i = W'_i \circ \sigma$ (vision fonctionnelle) ou $W_i = \{ p \mid \sigma(p) \in W'_i \}$ (vision ensembliste). Avec cette définition $\Mod$ est bien un foncteur contravariant puisque, d'une part, $(\Mod(\sigma) \circ \Mod(\sigma')) (I'',W'',R'')$ et $\Mod(\sigma' \circ \sigma)(I'',W'',R'')$ ont les mêmes $I$ et $R$, et d'autre part,
+\begin{align*}
+&(W''_i \circ \sigma') \circ \sigma = W''_i \circ (\sigma' \circ \sigma) &\text{ (vision fonctionnelle)}\\
+&  \{ p \mid \sigma(p) \in \{ q \mid \sigma'(q) \in W''_i \}\} = \{ p \mid (\sigma' \circ \sigma)(p) \in W''_i \} & \text{ (vision ensembliste)}
+\end{align*}
+\itemz Soit $(I,W,R)$ un modèle de Kripke pour la signature $P$ et $i \in I$. On définit la satisfaction en $i$ par induction structurelle sur $\ph \in \Sen(P)$.
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+\item $(I,W,R) \models^i_P p$ si $p \in W_i$.
+\item $(I,W,R) \models^i_P \ph \wedge \psi$ si $(I,W,R) \models^i_P \ph$ et $(I,W,R) \models^i_P \psi$.
+\item $(I,W,R) \models^i_P \ph \vee \psi$ si $(I,W,R) \models^i_P \ph$ ou $(I,W,R) \models^i_P \psi$.
+\item $(I,W,R) \models^i_P \neg \ph$ si $(I,W,R) \not\models^i_P \ph$.
+\item $(I,W,R) \models^i_P \square \ph$ si pour tout $j$ tel que $(i,j) \in R$, $(I,W,R) \models^j_P \ph$.
+\item $(I,W,R) \models^i_P \lozenge \ph$ si il existe $j$ tel que $(i,j) \in R$ et $(I,W,R) \models^j_P \ph$.
+\end{itemize}
+On dit enfin que $(I,W,R) \models_P \ph$ si pour tout $i \in I$, $(I,W,R) \models^i_P \ph$. Pour la dernière fois, vérifions que la relation de satisfaction est vérifiée. On se donne un morphisme $\sigma : P \to P'$ et un $P'$-modèle $(I',W',R')$. On note $(I,W,R) = \Mod(\sigma)((I',W',R'))$. On vérifie par que 
+\[ (I',W',R') \models_{P'} \sigma(\ph) \iff (I,W,R) \models_P \ph \]
+Pour cela, on montre d'abord par induction sur $\ph$ que pour tout $i \in I$ on a 
+\[ (I',W',R') \models^i_{P'} \sigma(\ph) \iff (I,W,R) \models^i_P \ph \]
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+\item Si $\ph = p$, pour tout $i \in I$, cela revient à dire que $\sigma(p) \in W'_i \iff p \in W_i$, vrai par définition.
+\item Si $\ph = \psi \wedge \theta$, pour tout $i \in I$, cela revient à dire que 
+\begin{align*} (I',W',R') \models^i_{P'} \sigma(\psi) \text{ et } (I',W',R') \models^i_{P'} \sigma(\theta) \iff (I,W,R) \models^i_P \psi \text{ et } (I,W,R) \models^i_P \theta
+\end{align*}
+ce qui est évident par hypothèse d'induction. Le même raisonnement est valable pour $\vee$, $\neg$ et $\Rightarrow$.
+\item Si $\ph = \square \psi$, pour tout $i \in I$, on doit vérifier que
+\begin{align*} & \forall j \in I' \text{ tel que } (i,j) \in R', (I',W',R') \models^j_{P'} \sigma(\psi) \\ \iff & \forall j \in I \text{ tel que } (i,j) \in R, (I,W,R) \models^j_P \psi
+\end{align*}
+Comme $I = I'$, $R = R'$, et que $(I',W',R') \models^j_{P'} \sigma(\psi) \iff (I,W,R) \models^j_{P} \psi$ pour tout $j \in I$ (par hypothèse d'induction), cette équivalence est vraie.
+\item Si $\ph = \lozenge \psi$, on remarque que $\lozenge \psi$ et $\neg \square \neg \psi$ sont sémantiquement équivalentes et on utilise les cas précédents.
+\end{itemize}
+\end{itemize}
+\gr{Topological MPL (TMPL)}. On abandonne le point de vue relationnel de $\gr{MPL}$ pour un point de vue topologique.
+\begin{itemize}
+\itemz La catégorie des signatures est $\gr{Set}$, comme dans $\gr{MPL}$.
+\itemz Le foncteur $\Sen$ le même que pour $\gr{MPL}$.
+\itemz Soit $P$ un ensemble. Un objet de $\Mod(P)$ (appelé \il{topos-modèle}) est un espace topologique $(X,\tau)$ muni d'une fonction $\nu : P \to P(X)$ dite \il{de valuation}. Un morphisme $h : (X,\tau,\nu) \to (X',\tau',\nu')$ est une fonction continue telle que pour tout $p \in P$, $h(\nu(p)) \subseteq \nu'(p)$. Ceci est compatible avec les fonctions identités et la composition usuelle. Soit maintenant $\sigma : P \to P'$ et $(X',\tau',\nu')$ un $P'$-modèle. On définit le $P$-modèle $(X,\tau,\nu) = \Mod(\sigma)((X',\tau',\nu'))$ par $X = X'$, $\tau = \tau'$ et $\nu = \nu' \circ \sigma$. Il est facile de voir que $\Mod$ est un foncteur contravariant.
+\itemz Comme pour $\gr{MPL}$, on dit que $(X,\tau,\nu) \models_P \ph$ lorsque $\forall x \in X, (X,\tau,\nu) \models_P^x \ph$, où l'on a défini par induction sur $\ph$ :
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+\item $(X,\tau,\nu) \models_P^x p$ si $x \in \nu(P)$.
+\item $(X,\tau,\nu) \models_P^x \psi \wedge \theta$ est défini à la Tarski, comme pour $\gr{MPL}$ ; de même pour les autres connecteurs booléens.
+\item $(X,\tau,\nu) \models_P^x \square \psi$ si il existe un ouvert $O \in \tau$ tel que $x \in O$ et pour tout $y \in O$, $(X,\tau,\nu) \models_P^y \psi$ (la modalité $\square$ représente \il{l'intérieur}).
+\item $(X,\tau,\nu) \models_P^x \lozenge \psi$ si pour tout ouvert $O \in \tau$ tel que $x \in O$, il existe un $y \in O$ tel que $(X,\tau,\nu) \models_P^y \psi$ (la modalité $\lozenge$ représente \il{l'adhérence}).
+\end{itemize}
+\end{itemize}
+\gr{Metric MPL (MMPL)}. Il s'agit d'une instance de $\gr{TMPL}$ dans le cas où $\tau = \tau_d$ est la topologie associée à une distance $d$.
+\begin{itemize}
+\itemz La catégorie des signatures est $\gr{Set}$, comme dans $\gr{MPL}$.
+\itemz Le foncteur $\Sen$ le même que pour $\gr{MPL}$.
+\itemz Soit $P$ un ensemble. Un objet de $\Mod(P)$ (appelé \il{modèle métrique}) est un espace métrique $(X,d)$ muni d'une fonction $\nu : P \to P(X)$ dite \il{de valuation}. Un morphisme $h : (X,d,\nu) \to (X',d',\nu')$ est une fonction continue telle que pour tout $p \in P$, $h(\nu(p)) \subseteq \nu'(p)$. Ceci est compatible avec les fonctions identités et la composition usuelle. Soit maintenant $\sigma : P \to P'$ et $(X',d',\nu')$ un $P'$-modèle. On définit le $P$-modèle $(X,d,\nu) = \Mod(\sigma)((X',d',\nu'))$ par $X = X'$, $d = d'$ et $\nu = \nu' \circ \sigma$. Il est facile de voir que $\Mod$ est un foncteur contravariant.
+\itemz Comme pour $\gr{MPL}$, on dit que $(X,d,\nu) \models_P \ph$ lorsque $\forall x \in X, (X,d,\nu) \models_P^x \ph$, où l'on a défini par induction sur $\ph$ :
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+\item $(X,d,\nu) \models_P^x p$ si $x \in \nu(P)$.
+\item $(X,d,\nu) \models_P^x \psi \wedge \theta$ est défini à la Tarski, comme pour $\gr{MPL}$ ; de même pour les autres connecteurs booléens.
+\item $(X,d,\nu) \models_P^x \square \psi$ si il existe $\varepsilon > 0$ tel que pour tout $y$ tel que $d(x,y) < \varepsilon$, $(X,d,\nu) \models_P^y \psi$ (la modalité $\square$ représente \il{l'intérieur}).
+\item $(X,\tau,\nu) \models_P^x \lozenge \psi$ si pour tout $\varepsilon > 0$ il existe un $y$ qui satisfait $d(x,y) < \varepsilon$ et $(X,d,\nu) \models_P^y \psi$ (la modalité $\lozenge$ représente \il{l'adhérence}).
+\end{itemize}
+\end{itemize}
+\gr{Exercice.} Définir une institution $\gr{NMPL}$ où les modèles sont des espaces vectoriels normés munis d'une valuation $(X,||-||,\nu)$.\\\\
+Tout comme pour $\gr{FOL}^\gr{1}$, la définition de la relation de satisfaction dans $\gr{MPL}$, $\gr{TMPL}$ et $\gr{MMPL}$ n'est pas naturelle : l'absence de notion d'état force à quantifier universellement. On aimerait pouvoir dire \il{institutionnellement} que $\M \models_{\La} \ph[a_1...a_n]$ seulement pour certains $n$-uples $a_1...a_n$ (dans $\gr{FOL}^\gr{1}$) ou que $(I,W,R) \models_P^i \ph$ seulement pour certains mondes possibles indicés par $J \subsetneq I$ (dans $\gr{MPL}$). Ces considérations ont fait émerger la notion d'institution stratifiée.
 \newpage
 \section{Institutions stratifiées}
 \begin{defi}[Institution stratifiée]
@@ -332,9 +425,135 @@ Cette partie propose une généralisation de notions bien connues en logique du 
   \hline
 \end{tabular}
 \end{center}
+Commençons par introduire les notions dans le cadre classique de la théorie des modèles.
+
+\subsection{Le théorème de \L{}o\'s classique}
+Soit $\La$ un langage du premier ordre de signature $(\C,(\F_n)_{n\in \N^*}, (\R_n)_{n\in \N^*})$, $I$ un ensemble non vide, et $(\M_i)_{i\in I}$ une famille de $\La$-structures indexées par $I$. Pour $a \in \prod_{i\in I} M_i$, on note $a(i)$ sa $i$-ème coordonnée. Pour toute $\La$-formule $\ph = \ph(x_1...x_n)$ (i.e. à variables parmi $x_1...x_n$) et tout $(a_1...a_n) \in \prod_{i\in I} M_i$, on note 
+\[ ||\ph(\bar{a})|| = \{ i \in I \mid \M_i \models \ph(\bar{a}(i))\} \]
+où $\bar{a}(i) = a_1(i)...a_n(i)$. On a les propriétés :
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+\itemz $|| (\ph \wedge \psi) (\bar{a}) || = || \ph (\bar{a}) || \cap || \psi (\bar{a}) ||$
+\itemz $|| (\ph \vee \psi) (\bar{a}) || = || \ph (\bar{a}) || \cup || \psi (\bar{a}) ||$
+\itemz $|| \neg\ph (\bar{a}) || = I \setminus || \ph (\bar{a}) ||$
+\end{itemize}
+Le produit cartésien des $(\M_i)_{i\in I}$ est muni de la $\La$-structure suivante, notée $\M = \prod_{i\in I} \M_i$. Pour $c \in \C$, $c^\M = (c^{\M_i})_{i\in I}$. Pour $f \in \F_n$, $f^\M(a_1...a_n) = (f^{\M_i}(a_1(i)...a_n(i))_{i\in I}$. Pour $R \in \R_n$, $R^\M = \{(a_1...a_n) \in (\prod_{i\in I} M_i)^n \mid \forall i \in I, (a_1(i)...a_n(i)) \in R^{\M_i}\}$. On a alors pour tout $\La$-terme $t = t(x_1...x_n)$ que $t^\M (a_1...a_n) = (t^{\M_i}(a_1(i)...a_n(i)))_{i\in I}$.
+\subsubsection{Filtres et ultrafiltres}
+\begin{defi}
+Un filtre sur $I$ est une partie $\F \subseteq P(I)$ qui vérifie
+\begin{enumerate}
+\setlength\itemsep{-0.3em}
+\item[(i)] $I \in \F$, $\emptyset \notin \F$.
+\item[(ii)] Si $X,Y \in \F$ alors $X \cap Y \in \F$ (stabilité par intersections finies).
+\item[(iii)] Si $X \subseteq Y$ et $X \in \F$ alors $Y \in \F$.
+\end{enumerate}
+\end{defi}
+
+\gr{Exemples.} 
+\begin{itemize}
+\itemz Le filtre trivial est $\F = \{ I \}$.
+\itemz Le filtre engendré par $J\subseteq I$ (on dit que c'est un filtre principal) est défini par $\F_J = \{ X \in P(I) \mid J \subseteq X \}$. Si $I$ est fini, tous les filtres sont principaux (prendre un $X \in \F$ de cardinalité minimale).
+\itemz Un ensemble $B \subseteq P(I)$ est une \il{base de filtre} s'il a la propriété de l'intersection finie i.e. pour tous $X_1...X_n \in B, X_1 \cap ... \cap X_n \neq \emptyset$. Dans ce cas, on pose $\F_B = \{ X \in P(I) \mid \exists n \in \N^* , \exists X_1...X_n, X_1 \cap ... \cap X_n \subseteq X \}$, qui est le plus petit filtre contenant $B$. On l'appelle le filtre engendré par $B$.
+\itemz Si $I$ est infini, on définit le filtre de Fréchet par $\F_\text{Fréchet} = \{ X \in P(I) \mid I\setminus X \text{ est fini}\}$. C'est un filtre qui est non principal. En effet, si $J \in \F_\text{Fréchet}$, soit $i_0 \in J$. Alors $I \setminus (J \setminus \{i_0\})$ est fini donc $J \setminus \{i_0\} \in \F_\text{Fréchet}$ d'où $\F_\text{Fréchet} \neq \F_J$.
+\end{itemize}
+Un \il{ultrafiltre} est un filtre maximal pour l'inclusion. Tout filtre $\F_0$ est contenu dans un ultrafiltre, par le lemme de Zorn (l'ensemble des filtres sur $I$ contenant $\F_0$ est inductif).
+\begin{prop}
+Soit $\F$ un filtre sur $I$. On a équivalence entre :
+\begin{enumerate}
+\setlength\itemsep{-0.3em}
+\item[(i)] $\F$ est un ultrafiltre.
+\item[(ii)] $\forall X \in P(I), X \in \F$ ou (exclusif) $I \setminus X \in \F$.
+\item[(iii)] $\forall X,Y \in P(I), X \cup Y \in \F \Rightarrow X \in \F$ ou $Y \in \F$.
+\item[(iv)] $\forall n \in \N^*, \forall X_1...X_n \in P(I), X_1 \cup ... \cup X_n \in \F \Rightarrow \exists i, X_i \in \F$
+\end{enumerate}
+\end{prop}
+\preuve
+Les implications $(iv) \Rightarrow (iii) \Rightarrow (ii)$ sont évidentes. Pour $(ii) \Rightarrow (i)$, on prend $X \notin \F$ (et donc $I \setminus X \in \F$), alors $\F \cup \{X\}$ n'est pas contenu dans un filtre $\F'$ sinon on aurait $\emptyset = X \cap (I\setminus X) \in \F'$. Pour $(i) \Rightarrow (iv)$, on suppose que $\F$ est un ultrafiltre et on prend $X_1...X_n \in P(I)$ tels que $\forall i, X_i \notin \F$. L'ensemble $\{ Y \cap X_i \mid Y \in \F \}$ ne peut avoir la propriété de l'intersection finie, sinon il serait la base d'un filtre contenant $\F$ et $X_i$, donc contenant strictement $\F$. Il existe donc $Y_i \in \F$ tel que $Y_i \cap X_i = \emptyset$. Alors :
+\[ \left( \bigcap_{i=1}^n Y_i \right) \cap \left( \bigcup_{j=1}^n X_j \right) = \bigcup_{j=1}^n \left( \left( \bigcap_{i=1}^n Y_i \right) \cap X_j \right) = \emptyset \]
+Comme $\bigcap_{i=1}^n Y_i \in \F$ on a donc $\bigcup_{j=1}^n X_j \notin \F$.
+\cqfd
+Les ultrafiltres principaux sont les $\F_{\{i_0\}}$ i.e. les filtres principaux engendrés par les singletons.
+\begin{prop}
+Soit $\U$ un ultrafiltre sur $I$. Alors $\U$ est non principal si et seulement si $\U$ contient le filtre de Fréchet.
+\end{prop}
+\preuve
+Si $\U$ ne contient pas le filtre de Fréchet, on trouve $X \notin \U$ cofini. Alors $I \setminus X \in \U$ est fini, donc réunion finie de ses singletons : on peut trouver un $i_0 \in I \setminus X$ tel que $\{i_0\} \in \U$. On en déduit que $\U$ contient le filtre $\F_{\{i_0\}}$, maximal, donc que $\U = \F_{\{i_0\}}$. Pour la réciproque, on montre que pour un filtre principal $\F_J$, $\F_\text{Fréchet} \nsubseteq \F_J$. En effet, soit $i_0 \in J$, alors $J \cap (I \setminus \{i_0\}) = J \setminus \{i_0\} \notin \F_J$, d'où $I \setminus \{i_0\} \notin \F_J$ alors que $I \setminus \{i_0\} \in \F_\text{Fréchet}$.
+\cqfd
+\subsubsection{Produits réduits et ultraproduits}
+Pour tout filtre $\F$ sur $I$ on définit une relation binaire sur $M = \prod_{i\in I} M_i$ par :
+\begin{align*}
+a \sim_\F b & \equi \{ i \in I \mid a(i) = b(i) \} \in \F \\
+& (\equi || a = b || \in \F) \end{align*}
+\begin{prop}
+La relation $\sim_\F$ est une relation d'équivalence. De plus, pour tous $a_1...a_n,b_1...b_n \in \prod_{i\in I} M_i$, tout $f \in \F_n$ et tout $R \in \R_n$, on a :
+\begin{align*}
+\forall j \in \llbracket 1,n \rrbracket, a_j \sim_\F b_j \Rightarrow & f^\M (a_1...a_n) \sim_\F f^\M (b_1...b_n) \\ & \text{ et } ||R(a_1...a_n)|| \in \F \equi ||R(b_1...b_n)||\in \F
+\end{align*}
+\end{prop}
+\preuve
+La relation $\sim_\F$ est évidemment symétrique. Elle est réflexive car $I \in \F$. Elle est transitive car si $|| a = b || \in \F$ et $|| b = c || \in \F$ alors $ || a = c || \supseteq || a = b || \cap || b = c || \in \F$ donc $|| a = c || \in \F$. Supposons que $\forall j \in \llbracket 1,n \rrbracket, a_j \sim_\F b_j$. Alors :
+\[ || f^\M(a_1...a_n) = f^\M(b_1...b_n) || \supseteq \bigcap_{j=1}^n || a_j = b_j || \in \F \]
+donc $|| f^\M(a_1...a_n) = f^\M(b_1...b_n) || \in \F$ d'où $f^\M(a_1...a_n) \sim_\F f^\M(b_1...b_n)$. D'autre part, comme :
+\[ || R(a_1...a_n) || \cap \bigcap_{j=1}^n || a_j = b_j || = || R(b_1...b_n) || \cap \bigcap_{j=1}^n || a_j = b_j || \]
+on a l'équivalence $ || R(a_1...a_n) || \in \F \equi || R(b_1...b_n) || \in \F$.
+\cqfd
+\gr{Remarque.} On voit facilement que pour tout terme $t = t(x_1...x_n)$, si $\forall j \in \llbracket 1,n \rrbracket, a_j \sim_\F b_j$ alors $|| t^\M (a_1...a_n) = t^\M (b_1...b_n) || \in \F$.\\\\
+On va maintenant munir le quotient d'une $\La$-structure. Soit $\pi : \prod_{i\in I} M_i \to \prod_{i\in I} M_i / \sim_\F$ la surjection canonique.
+\begin{defi}
+Le produit réduit des $(\M_i)_{i\in I}$ sur le filtre $\F$ est la $\La$-structure $\M$ suivante :
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+\itemz Son domaine est $\prod_{i\in I} M_i / \sim_\F$.
+\itemz Pour tout $c \in \C$, $c^\M = \pi((c^{\M_i})_{i\in I})$.
+\itemz Pour tout $f \in \F_n$, $a_1...a_n \in \prod_{i\in I} M_i$,
+\[ f^\M(\pi(a_1)...\pi(a_n)) = \pi((f^{\M_i}(a_1(i)...a_n(i)))_{i\in I}) \]
+\itemz Pour tout $R \in \R_n$,
+\[ R^\M = \{ (\pi(a_1)...\pi(a_n)) \mid || R(a_1...a_n) || \in \F \} \]
+\end{itemize}
+Cette structure sera notée $\prod_{i\in I} \M_i / \F$.
+\end{defi}
+\gr{Remarques.} Par définition, $\pi : \prod_{i\in I} \M_i \to \prod_{i\in I} \M_i / \F$ est alors un homomorphisme. Si $\F = \{ I \}$, $\sim_\F$ est l'égalité et $\pi$ l'identité de $\prod_{i\in I} M_i$. Si $\F = \F_J$ pour un certain $\emptyset \neq J \subseteq I$, alors $\prod_{i\in I} \M_i / \F \cong \prod_{j \in J} \M_j$. En particulier, si $J = \{ i_0 \}$, $\prod_{i\in I} \M_i / \F \cong \M_{i_0}$.\\\\
+On s'intéresse particulièrement au cas où $\F$ est un ultrafiltre $\U$. Dans ce cas, $\prod_{i\in I} \M_i / \U$ est appelé \il{ultraproduit}.
+\begin{theo}[\L{}o\'s]
+Soit $\U$ un ultrafiltre sur $I$. Pour toute $\La$-formule $\ph = \ph(x_1...x_n)$, tous $a_1...a_n \in \prod_{i\in I} M_i$, on a l'équivalence suivante :
+\[ \prod_{i\in I} \M_i / \U \models \ph(\pi(a_1)...\pi(a_n)) \equi || \ph(a_1...a_n) || \in \U \]
+\end{theo}
+\preuve
+On note $\M = \prod_{i\in I} \M_i$ et $\M^* = \M / \U$. La preuve est par récurrence sur la hauteur $h$ de $\ph$. On peut supposer que $\ph$ s'écrit uniquement à l'aide des connecteurs $\wedge$ et $\neg$ et du quantificateur $\exists$.\\\\
+\underline{Si $h(\ph) = 0$}, $\ph$ est atomique donc $\ph = R(t_1...t_k)$ où $R \in \R_k$ et $t_1...t_k$ sont des termes à variables parmi $x_1...x_n$.
+\begin{align*}
+\M^* \models \ph(\pi(a_1)...\pi(a_n)) & \text{ ssi }
+(t_1^{\M^*}(\pi(a_1)...\pi(a_n))...t_k^{\M^*}(\pi(a_1)...\pi(a_n))) \in \R^{\M^*} \\
+& \text{ ssi } (\pi(t_1^\M (a_1...a_n))...\pi(t_k^\M (a_1...a_n))) \in \R^{\M^*} \\
+& \text{ ssi } || R(t_1^\M(a_1...a_n)...t_k^\M(a_1...a_n)) || \in \U \\
+& \text{ ssi } || \ph(a_1...a_n) || \in \U
+\end{align*}
+\underline{Si $h(\ph) = k+1$} et que la propriété est vraie pour tous les $h \leq k$, alors :
+\begin{itemize}
+\itemz $\ph = \theta \wedge \psi$, où $h(\theta) \leq k$ et $h(\psi) \leq k$. Alors :
+\begin{align*}
+\M^* \models \ph(\pi(a_1)...\pi(a_n)) & \text{ ssi }
+\M^* \models \theta(\pi(a_1)...\pi(a_n)) \\ & \text{ et } \M^* \models \psi(\pi(a_1)...\pi(a_n)) \\
+& \text{ ssi } || \theta(a_1...a_n) || \in U \text{ et } || \psi(a_1...a_n) || \in \U \\
+& \text{ ssi } || \theta(a_1...a_n) || \cap || \psi(a_1...a_n) || \in \U \\
+& \text{ ssi } || (\theta \wedge \psi)(a_1...a_n) || \in \U \\
+& \text{ ssi } || \ph(a_1...a_n) || \in \U
+\end{align*}
+\itemz $\ph = \exists x_0 \psi$, où $h(\psi) = k$. Alors $\M^* \models \ph(\pi(a_1)...\pi(a_n))$ ssi il existe un $a_0 \in \prod_{i\in I} M_i$ tel que $\M^* \models \psi(\pi(a_0)...\pi(a_n))$ i.e. tel que $|| \psi(a_0...a_n)|| \in \U$. Comme $|| \ph(a_1...a_n) || \supseteq || \psi(a_0...a_n) ||$, on a $|| \psi(a_0...a_n) || \in \U \Rightarrow || \ph(a_1...a_n) || \in \U$. Réciproquement, supposons que $ || \ph(a_1...a_n) || \in \U$ et montrons qu'il existe un $a_0$ tel que $|| \psi(a_0...a_n) || \in \U$. Pour tout $i \in || \ph(a_1...a_n) ||$ il existe un $b^i \in M_i$ tel que $\M_i \models \psi(b^i,a_1(i)...a_n(i))$. On pose donc $a_0(i) = b^i$ pour tout $i \in || \ph(a_1...a_n) ||$, et on lui donne des valeurs quelconques pour les autres indices $i$. On a alors $|| \ph(a_1...a_n) || \subseteq || \psi(a_0...a_n) ||$ donc $||\psi(a_0...a_n) || \in \U$. On vient donc de prouver que $\M^* \models \ph(\pi(a_1)...\pi(a_n))$ ssi $||\ph(a_1...a_n)|| \in \U$.
+\itemz $\ph = \neg \psi$, où $h(\psi) = k$. Alors, en utilisant la propriété $(ii)$ des ultrafiltres, on peut voir que :
+\begin{align*}
+\M^* \models \ph(\pi(a_1)...\pi(a_n)) & \text{ ssi } \M^* \not\models \psi(\pi(a_1)...\pi(a_n)) \\
+& \text{ ssi } || \psi(a_1...a_n) || \notin \U \\
+& \text{ ssi } I \setminus || \psi(a_1...a_n) || \in \U \\
+& \text{ ssi } || \neg \psi(a_1...a_n) || \in \U \\
+& \text{ ssi } || \ph(a_1...a_n) || \in \U
+\end{align*}
+\end{itemize}
+\cqfd
+\end{document}
+
 git add truc.extension\\
 git commit (-a) -m "Message"\\
 git push origin master\\
 \\
 git pull origin master
-\end{document}
