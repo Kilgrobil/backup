@@ -244,7 +244,10 @@ Soit $\sigma : P \to P'$ un morphisme. Le morphisme $\Sen(\sigma)$ associe à to
  \end{align*}
 On notera désormais $\sigma(\ph)$ pour $\Sen(\sigma)(\ph)$.
 \itemz Le foncteur contravariant $\Mod : \gr{Set} \to \gr{Cat}$ associe à un ensemble $P$ le préordre $(\{0,1\}^P, \leq)$. On peut le voir comme une catégorie de la façon suivante. Ses objets sont les valuations $\nu : P \to \{0,1\}$. Lorsque $\nu \leq \nu'$ en tout point de $P$, on se donne un morphisme $\nu \to \nu'$. Par réflexivité, il y a donc des morphismes identité. La composition est $\nu \to \nu' \to \nu'' = \nu \to \nu''$, bien définie par transitivité. L'unicité de chaque morphisme $\nu \to \nu'$ donne automatiquement les conditions $(ii)$ et $(iii)$.\\\\
-Soit $\sigma : P \to P'$ un morphisme. On définit $\Mod(\sigma)(\nu') = \nu' \circ \sigma$. Vérifions que $\Mod$ est bien un foncteur contravariant. Soit $\sigma : P \to P', \sigma' : P' \to P''$. Alors
+Soit $\sigma : P \to P'$ un morphisme. On définit $\Mod(\sigma)(\nu') = \nu' \circ \sigma$ et $\Mod(\sigma)(\nu' \to \nu'') = (\nu' \circ \sigma) \to (\nu'' \circ \sigma)$. D'abord, on doit voir que $\Mod(\sigma)$ est un foncteur de type $(\{0,1\}^{P'}, \leq) \to (\{0,1\}^P,\leq)$. On a en effet
+\begin{align*} \Mod(\sigma)((\nu' \to \nu'') \circ (\nu \to \nu')) & = \Mod(\sigma)(\nu \to \nu'') = (\nu \circ \sigma) \to (\nu'' \circ \sigma) \\ & = ((\nu' \circ \sigma) \to (\nu'' \circ \sigma)) \circ ((\nu \circ \sigma) \to (\nu' \circ \sigma)) \\
+& = \Mod(\sigma)(\nu' \to \nu'') \circ \Mod(\sigma)(\nu \to \nu') \end{align*}
+Vérifions que $\Mod$ est bien un foncteur contravariant. Soit $\sigma : P \to P', \sigma' : P' \to P''$. Alors
 \begin{align*}
 (\Mod(\sigma) \circ \Mod(\sigma'))(\nu'') = \nu'' \circ \sigma' \circ \sigma = \Mod(\sigma' \circ \sigma)(\nu'')
 \end{align*}
@@ -308,7 +311,10 @@ Un morphisme $h : \M \to \M'$ est une fonction $h : M \to M'$ telle que
 \end{enumerate}
 La composition est la composition usuelle des fonctions, ce qui fait de $\Mod(\La)$ une catégorie. \`A présent, étant donné un morphisme $\sigma : \La \to \La'$, on définit $\Mod(\sigma)(\M') = \M = (M, \C^\M, \F^\M, \R^\M)$ par $M = M'$, $c^\M = \sigma(c)^{\M'}$, $f^\M = \sigma(f)^{\M'}$ et $R^\M = \sigma(R)^{\M'}$. Soit $\M_1 = \Mod(\sigma' \circ \sigma)(\M'')$ et $\M_2 = (\Mod(\sigma) \circ \Mod(\sigma'))(\M'')$. Alors $M_1 = M'' = M_2$ et pour tout $c \in \C$ on a :
 \[ c^{\M_1} = (\sigma' \circ \sigma)(c)^{\M''} = \sigma'(\sigma(c))^{\M''} = \sigma(c)^{\M'} = c^{\M_2} \]
-De même, on montre que $f^{\M_1} = f^{\M_2}$ et $R^{\M_1} = R^{\M_2}$, d'où $\M_1 = \M_2$.
+De même, on montre que $f^{\M_1} = f^{\M_2}$ et $R^{\M_1} = R^{\M_2}$, d'où $\M_1 = \M_2$.\\
+On définit $\Mod(\sigma)$ sur un morphisme $h : \M \to \M'$ par $\Mod(\sigma)(h) = h$. Il s'agit bien d'un morphisme de $\Mod(\sigma)(\M) \to \Mod(\sigma)(\M')$ car $h(c^{\Mod(\sigma)(\M)}) = h(\sigma(c)^\M) = \sigma(c)^{\M'} = c^{\Mod(\sigma)(\M')}$ (et de même pour les conditions (ii) et (iii)). \\
+Alors $\Mod(\sigma)$ est bien un foncteur puisque
+\[ \Mod(\sigma)(g \circ h) = g \circ h = \Mod(\sigma)(g) \circ \Mod(\sigma)(h) \]
 \itemz Enfin, étant donné une signature $\La$, on définit $\models_\La$ par la satisfaction usuelle du premier ordre après avoir quantifié universellement sur les variables libres. Autrement dit, si $\ph = \ph(x_1...x_n)$, on définit $\M \models_{\La} \ph$ par
 $$ \forall a_1...a_n \in M^n, \M \models_\La \ph[a_1...a_n]$$
 La condition de satisfaction est
@@ -347,6 +353,7 @@ Un morphisme $h : (I,W,R) \to (I',W',R')$ de $\Mod(P)$ est une fonction $h : I \
 &(W''_i \circ \sigma') \circ \sigma = W''_i \circ (\sigma' \circ \sigma) &\text{ (vision fonctionnelle)}\\
 &  \{ p \mid \sigma(p) \in \{ q \mid \sigma'(q) \in W''_i \}\} = \{ p \mid (\sigma' \circ \sigma)(p) \in W''_i \} & \text{ (vision ensembliste)}
 \end{align*}
+Il faut maintenant définir $\Mod(\sigma)$ sur un $P'$-morphisme $h : (I,W,R) \to (I',W',R')$.{\color{purple} A faire. Puis ensuite faire TMPL, MMPL, et revenir aux stratifiées. Finir MPL stratifiée, et faire la preuve qu'une institution stratifiée est une institution.}
 \itemz Soit $(I,W,R)$ un modèle de Kripke pour la signature $P$ et $i \in I$. On définit la satisfaction en $i$ par induction structurelle sur $\ph \in \Sen(P)$.
 \begin{itemize}
 \setlength\itemsep{-0.3em}
@@ -463,8 +470,9 @@ où la relation de droite est la satisfaction usuelle pour $\gr{PL}$, et vérifi
 \begin{itemize}
 \setlength\itemsep{-0.3em}
 \itemz Pour tout $P \in \gr{Sig}$, $(I,W,R) \in \Mod(P)$, on définit $\lb (I,W,R) \rb_P = (I,R)$.
-\itemz Pour tout $h : (I,W,R) \to (I',W',R')$, $\lb h \rb_P : (I,R) \to (I',R')$ est le morphisme de graphes sous-jacent à $h$. On a $\lb $ [fonctorialité]
-\itemz Pour tout $\sigma : P \to P'$, on définit $\lb (I',W',R') \rb_\sigma = id_{(I',R')}$.
+\itemz Pour tout $h : (I,W,R) \to (I',W',R')$, $\lb h \rb_P : (I,R) \to (I',R')$ est le morphisme de graphes sous-jacent à $h$. On a bien $\lb g \circ h \rb_P = \lb g \rb_P \circ \lb h \rb_P$.
+\itemz Pour tout $\sigma : P \to P'$, on définit $\lb (I,W,R) \rb_\sigma = id_{(I',R')}$. La commutation du diagramme se traduit par l'égalité suivante pour tout $h : (I,W,R) \to (I',W',R')$ : sapristi, j'ai oublié à chaque fois de définir $\Mod(\sigma)(h)$ pour un $h : \Mod(\sigma)(M) \to \Mod(\sigma)(M')$
+\[ \lb \Mod(\sigma)(h) \rb_P \circ \lb (I',W',R') \rb_\sigma =  \]
 \end{itemize}
 \newpage
 \section{Opérateurs duaux}
