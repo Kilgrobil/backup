@@ -85,6 +85,15 @@ So we have the following equalities
 So $\langle x , (A^* - A) y \rangle \in \R$. Once applied to the couple $(ix,y)$ this yields $i \langle x , (A^* - A)y \rangle \in \R$. If $\langle x , (A^* - A) \rangle \neq 0$ then $i \in \R$, contradiction. Thus
 \[ \forall x,y \in H, \langle x, (A-A^*)y \rangle = 0 \]
 Fix $y$ and define the linear continuous function $f(x) = \langle x , (A-A^*)y \rangle$. By the Riesz representation theorem, we have $||(A-A^*)y||_H = ||f||_{H^*} = 0$ because $f = 0$. Hence $(A-A^*)y = 0$. This is true for all $y \in H$, so $A = A^*$. This proves that $A$ is hermitian.\\\\
-According to definition 3.2.2
-\[ ||A|| = \sup_{x \neq 0} \frac{||Ax||}{||x||} \]
+Assume that $A$ is hermitian. We refer to definition 3.2.2, and also define $[A]$ as follows:
+\begin{align*} & ||A|| = \sup_{x \neq 0} \frac{||Ax||}{||x||} & [A] = \sup_{x \neq 0} \frac{|\langle Ax , x \rangle|}{||x||^2} \end{align*}
+Cauchy-Schwarz gives $|\langle Ax , x \rangle| \leq ||Ax|| \cdot ||x||$, thus if $x \neq 0$ we have $|\langle Ax , x \rangle|/||x||^2 \leq ||Ax||/||x||$, so that $[A] \leq ||A||$. To show the other inequality, it is sufficient to see that for all non-zero $x,y \in H$, $|\langle Ax , y \rangle| \leq [A] \cdot ||x||\cdot||y||$, because if this is the case, taking $y = Ax/||Ax||$ yields $||Ax|| \leq [A]\cdot ||x||$ and thus $||A|| \leq [A]$.\\\\
+The inequality $|\langle Ax , y \rangle| \leq [A] \cdot ||x|| \cdot ||y||$ is unchanged by every transformation $y \mapsto e^{i\theta} y$, so we can assume that $\langle Ax , y \rangle \in \R$. In this case, we have $\langle Ax , y \rangle = \langle x , Ay \rangle = \langle Ay , x \rangle$, so:
+\begin{align*} & \langle Ax , y \rangle = \frac{\langle A(x+y) , x+y \rangle - \langle A(x-y) , x-y \rangle}{4} \\
+& |\langle Ax , y \rangle| \leq \frac{[A]\left(||x+y||^2 + ||x-y||^2 \right)}{4} = \frac{[A]\left(||x||^2 + ||y||^2 \right)}{2}
+\end{align*}
+by the parallelogram identity. Take $x \mapsto \sqrt{\frac{||y||}{||x||}} x$, $y \mapsto \sqrt{\frac{||x||}{||y||}} y$ to get the  desired inequality:
+\[ |\langle Ax , y \rangle| \leq [A] \cdot ||x|| \cdot ||y|| \]
+This completes the proof that $[A] = ||A||$.
+
 \end{document}
