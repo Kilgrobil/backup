@@ -1,0 +1,90 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper]{geometry}
+
+\usepackage{amsthm}
+\newtheorem{theo}{Theorem}
+\newtheorem{defi}[theo]{Definition}
+\newtheorem{prop}[theo]{Proposition}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{stmaryrd}
+\usepackage{proof}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usetikzlibrary{decorations.pathmorphing}
+
+\setlength\parindent{0pt}
+
+\newcommand{\La}{\mathcal{L}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\ph}{\varphi}
+\newcommand{\itemz}{\item[$\triangleright$]}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\gr}{\textbf}
+\newcommand{\il}{\textit}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\preuve}{\begin{proof}[Preuve]}
+\newcommand{\cqfd}{\end{proof}}
+\newcommand{\equi}{\Leftrightarrow}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\I}{\mathcal{I}}
+\renewcommand{\iff}{\Leftrightarrow}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\lb}{\llbracket}
+\newcommand{\rb}{\rrbracket}
+\newcommand{\info}[1]{\text{{\fontfamily{lmss}\selectfont #1}}}
+\newcommand{\Mod}{\info{Mod}}
+\newcommand{\Sen}{\info{Sen}}
+\newcommand{\1}{\mathbbm{1}}
+\renewcommand{\P}{\mathcal{P}}
+
+\usepackage[bitstream-charter]{mathdesign}
+%\usepackage[charter]{mathdesign}
+%\usepackage{fontspec}
+%\setmainfont{URW Palladio L}
+
+\begin{document}
+
+\section*{Problem 2.1.2}
+
+Assume $A \cap B \neq \emptyset$. Let $c \in A \cap B$. Then $0 \leq z(A,B) = \inf_{(a,b) \in A \times B} d(a,b) \leq d(c,c) = 0$ so that $z(A,B) = 0$. The converse is not always true: if $X = \R$ and $d(x,y) = |x-y|$, take $A = \{0\}$ and $B = \R_+^*$. Then $A \cap B = 0$ but for all $\varepsilon > 0$ we have $\varepsilon \in B$ so $z(A,B) = d(0,B) \leq d(0,\varepsilon) = \varepsilon$. Thus $z(A,B) = 0$.\\\\
+Concerning the second question, first note that if $X = \R$ and $d(x,y) = |x-y|$, taking $A = \{0\}$ and $B = \R_+^*$ yields $\sup_{b \in B} \inf_{a\in A} d(a,b) = sup_{\varepsilon > 0} \varepsilon = +\infty$. For the function $d_H$ to be finite, we have thus to impose further that we are considering only \il{bounded} closed non-empty subsets of $X$. 
+\begin{defi}[Bounded subset] Let $A \in \P(X)$. $A$ is bounded if its diameter $\delta(A)$, defined by $\delta(A) = \sup_{(a,a') \in A \times A} d(a,a')$, is finite.
+\end{defi}
+For example, every subset is automatically bounded if $d$ is bounded.\\\\
+Let $E \subseteq \P(X)$ be the space of bounded closed non-empty subsets of $X$. Then the function $d_H : E \times E \to \R$ is well-defined. Indeed, let $A,B \in E$. Take $a_0 \in A$ and $b_0 \in B$. Then
+\[ \forall (a,b) \in A \times B,  d(a,b) \leq d(a,a_0) +  d(a_0,b_0) + d(b_0,b) \leq \delta(A) + d(a_0,b_0) + \delta(B) \]
+Then $d_H(A,B) \leq \delta(A) + d(a_0,b_0) + \delta(B) < +\infty$. Let us show that $d_H$ is a distance.
+Let $A,B,C \in E$. First, remark that $d_H(A,B) = \max\{ \sup_{a \in A} d(a,B) , \sup_{b \in B} d(b,A) \}$.
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+\item[(i)] As $d \geq 0$, it is immediate that $d_H \geq 0$.
+\item[(ii)] If $A = B$ then $\sup_{a\in A} d(a,B) = \sup_{a \in A} 0 = 0$ because $A \subseteq B$. Similarly, $\sup_{b\in B} d(b,A) = 0$. Thus $d_H(A,B) = 0$.
+\item[] If $d_H(A,B) = 0$ then $\sup_{a\in A} d(a,B) = 0$ so for any $a \in A$ we have $d(a,B) = 0$. As $B$ is closed, this means that $a \in B$ (according to remark 2.1.2). Thus $A \subseteq B$. Similarly $B \subseteq A$, and finally $A = B$.
+\item[(iii)] The function $d_H : E \times E \to \R$ is symmetric because the function $\max : \R \times \R \to \R$ is symmetric.
+\item[(iv)] Let $a \in A$, $b\in B$, $c\in C$. Then $d(a,b) \leq d(a,c) + d(c,b)$. Because $d(a,c)$ does not depend on $b$, taking the infimum for $b \in B$ yields $d(a,B) \leq d(a,c) + d(c,B)$. As $d(c,B) \leq d_H(C,B)$ we get $d(a,B) \leq d(a,c) + d_H(C,B)$. Taking the infimum for $c \in C$ yields $d(a,B) \leq d(a,C) + d_H(C,B)$. As $d(a,C) \leq d_H(A,C)$ we get $d(a,B) \leq d_H(A,C) + d_H(C,B)$, thus $\sup_{a\in A} d(a,B) \leq d_H(A,C) + d_H(C,B)$. With the same methode one can prove that $\sup_{b\in B} d(b,A) \leq d_H(A,C) + d_H(C,B)$. Thus, $d_H(A,B) \leq d_H(A,C) + d_H(C,B)$.
+\end{itemize}
+\newpage
+\section*{Problem 4.7.2}
+$(i) \Rightarrow (ii)$. Assume $A$ is hermitian. Then $f_A(x,y) = \langle Ax, y \rangle = \langle x, Ay \rangle = \overline{\langle Ay , x \rangle} = \overline{ f_A(y,x) }$.\\\\
+$(ii) \Rightarrow (iii)$. Assume $f_A$ is hermitian. Then $\phi_A(x) = \langle Ax, x \rangle = \overline{ \langle Ax , x \rangle}$ so $\langle Ax , x \rangle \in \R$.\\\\
+$(iii) \Rightarrow (i)$. Assume $\phi_A$ is real. Then for any $x,y \in H$:
+\[ \langle Ax , y \rangle + \langle Ay , x \rangle = \phi_A(x+y) - \phi_A(x) - \phi_A(y) \in \R \]
+So we have the following equalities
+\begin{align*}
+\langle Ax , y \rangle + \langle Ay , x \rangle & = \overline{\langle Ax , y \rangle} + \overline{\langle Ay , x \rangle} \\ \langle x , A^* y \rangle + \overline{\langle x , A y \rangle} & = \overline{\langle x , A^* y \rangle} + \langle x , Ay \rangle \\
+\langle x , (A^* - A) y \rangle & = \overline{\langle x , (A^*-A) y \rangle}
+\end{align*}
+So $\langle x , (A^* - A) y \rangle \in \R$. Once applied to the couple $(ix,y)$ this yields $i \langle x , (A^* - A)y \rangle \in \R$. If $\langle x , (A^* - A) \rangle \neq 0$ then $i \in \R$, contradiction. Thus
+\[ \forall x,y \in H, \langle x, (A-A^*)y \rangle = 0 \]
+Fix $y$ and define the linear continuous function $f(x) = \langle x , (A-A^*)y \rangle$. By the Riesz representation theorem, we have $||(A-A^*)y||_H = ||f||_{H^*} = 0$ because $f = 0$. Hence $(A-A^*)y = 0$. This is true for all $y \in H$, so $A = A^*$. This proves that $A$ is hermitian.\\\\
+According to definition 3.2.2
+\[ ||A|| = \sup_{x \neq 0} \frac{||Ax||}{||x||} \]
+\end{document}
