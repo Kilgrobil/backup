@@ -43,11 +43,16 @@
 \newcommand{\Mod}{\info{Mod}}
 \newcommand{\Sen}{\info{Sen}}
 \newcommand{\1}{\mathbbm{1}}
+\renewcommand{\contentsname}{Table des matières}
+\renewcommand{\proofname}{Preuve}
+
 
 \usepackage[bitstream-charter]{mathdesign}
 %\usepackage[charter]{mathdesign}
 %\usepackage{fontspec}
 %\setmainfont{URW Palladio L}
+
+
 
 \begin{document}
 
@@ -353,7 +358,7 @@ Un morphisme $h : (I,W,R) \to (I',W',R')$ de $\Mod(P)$ est une fonction $h : I \
 &(W''_i \circ \sigma') \circ \sigma = W''_i \circ (\sigma' \circ \sigma) &\text{ (vision fonctionnelle)}\\
 &  \{ p \mid \sigma(p) \in \{ q \mid \sigma'(q) \in W''_i \}\} = \{ p \mid (\sigma' \circ \sigma)(p) \in W''_i \} & \text{ (vision ensembliste)}
 \end{align*}
-Il faut maintenant définir $\Mod(\sigma)$ sur un $P'$-morphisme $h : (I,W,R) \to (I',W',R')$.{\color{purple} A faire. Puis ensuite faire TMPL, MMPL, et revenir aux stratifiées. Finir MPL stratifiée, et faire la preuve qu'une institution stratifiée est une institution.}
+Il faut maintenant définir $\Mod(\sigma)$ sur un $P'$-morphisme $h : (I,(W_i)_{i\in I},R) \to (I',(W'_i)_{i\in I},R')$. On doit avoir $\Mod(\sigma)(h) : (I,(W_i \circ \sigma)_{i\in I},R) \to (I',(W'_i \circ \sigma)_{i\in I'},R)$. On pose $\Mod(\sigma)(h)(i) = h(i)$. Alors il s'agit bien d'un morphisme de modèles puisque si $R(i,j)$ on a $R(h(i),h(j))$ (car $h$ est un morphisme) d'une part, et $W_i \circ \sigma \subseteq W'_{h(i)} \circ \sigma$ (car comme $h$ est un morphisme, $W_i \subseteq W'_{h(i)}$) d'autre part. Avec cette définition, il est évident que $\Mod(\sigma)$ est un foncteur.
 \itemz Soit $(I,W,R)$ un modèle de Kripke pour la signature $P$ et $i \in I$. On définit la satisfaction en $i$ par induction structurelle sur $\ph \in \Sen(P)$.
 \begin{itemize}
 \setlength\itemsep{-0.3em}
@@ -367,7 +372,7 @@ Il faut maintenant définir $\Mod(\sigma)$ sur un $P'$-morphisme $h : (I,W,R) \t
 On dit enfin que $(I,W,R) \models_P \ph$ si pour tout $i \in I$, $(I,W,R) \models^i_P \ph$. Pour la dernière fois, vérifions que la relation de satisfaction est vérifiée. On se donne un morphisme $\sigma : P \to P'$ et un $P'$-modèle $(I',W',R')$. On note $(I,W,R) = \Mod(\sigma)((I',W',R'))$. On vérifie par que 
 \[ (I',W',R') \models_{P'} \sigma(\ph) \iff (I,W,R) \models_P \ph \]
 Pour cela, on montre d'abord par induction sur $\ph$ que pour tout $i \in I$ on a 
-\[ (I',W',R') \models^i_{P'} \sigma(\ph) \iff (I,W,R) \models^i_P \ph \]
+\begin{equation} (I',W',R') \models^i_{P'} \sigma(\ph) \iff (I,W,R) \models^i_P \ph \label{mplsat} \end{equation} 
 \begin{itemize}
 \setlength\itemsep{-0.3em}
 \item Si $\ph = p$, pour tout $i \in I$, cela revient à dire que $\sigma(p) \in W'_i \iff p \in W_i$, vrai par définition.
@@ -386,7 +391,7 @@ Comme $I = I'$, $R = R'$, et que $(I',W',R') \models^j_{P'} \sigma(\psi) \iff (I
 \begin{itemize}
 \itemz La catégorie des signatures est $\gr{Set}$, comme dans $\gr{MPL}$.
 \itemz Le foncteur $\Sen$ est le même que pour $\gr{MPL}$.
-\itemz Soit $P$ un ensemble. Un objet de $\Mod(P)$ (appelé \il{topos-modèle}) est un espace topologique $(X,\tau)$ muni d'une fonction $\nu : P \to P(X)$ dite \il{de valuation}. Un morphisme $h : (X,\tau,\nu) \to (X',\tau',\nu')$ est une fonction continue telle que pour tout $p \in P$, $h(\nu(p)) \subseteq \nu'(p)$. Ceci est compatible avec les fonctions identités et la composition usuelle. Soit maintenant $\sigma : P \to P'$ et $(X',\tau',\nu')$ un $P'$-modèle. On définit le $P$-modèle $(X,\tau,\nu) = \Mod(\sigma)((X',\tau',\nu'))$ par $X = X'$, $\tau = \tau'$ et $\nu = \nu' \circ \sigma$. Il est facile de voir que $\Mod$ est un foncteur contravariant.
+\itemz Soit $P$ un ensemble. Un objet de $\Mod(P)$ (appelé \il{topos-modèle}) est un espace topologique $(X,\tau)$ muni d'une fonction $\nu : P \to P(X)$ dite \il{de valuation}. Un morphisme $h : (X,\tau,\nu) \to (X',\tau',\nu')$ est une fonction continue telle que pour tout $p \in P$, $h(\nu(p)) \subseteq \nu'(p)$. Ceci est compatible avec les fonctions identités et la composition usuelle. Soit maintenant $\sigma : P \to P'$ et $(X',\tau',\nu')$ un $P'$-modèle. On définit le $P$-modèle $(X,\tau,\nu) = \Mod(\sigma)((X',\tau',\nu'))$ par $X = X'$, $\tau = \tau'$ et $\nu = \nu' \circ \sigma$. Pour un $P'$-morphisme $h : (X,\tau,\nu) \to (X',\tau',\nu')$, on définit le $P$-morphisme $\Mod(\sigma)(h) : (X,\tau, \nu\circ\sigma) \to (X',\tau',\nu'\circ\sigma)$ comme étant égal à $h$. Il s'agit bien d'un $P$-morphisme puisqu'il est continu (car le $P'$-morphisme $h$ est continu) et que pour tout $p \in P$, $h(\nu(\sigma(p))) \subseteq \nu'(\sigma(p))$ (d'après la propriété $h(\nu(p')) \subseteq \nu'(p')$). Il est facile de voir que $\Mod$ est un foncteur contravariant.
 \itemz Comme pour $\gr{MPL}$, on dit que $(X,\tau,\nu) \models_P \ph$ lorsque $\forall x \in X, (X,\tau,\nu) \models_P^x \ph$, où l'on a défini par induction sur $\ph$ :
 \begin{itemize}
 \setlength\itemsep{-0.3em}
@@ -400,7 +405,7 @@ Comme $I = I'$, $R = R'$, et que $(I',W',R') \models^j_{P'} \sigma(\psi) \iff (I
 \begin{itemize}
 \itemz La catégorie des signatures est $\gr{Set}$, comme dans $\gr{MPL}$.
 \itemz Le foncteur $\Sen$ le même que pour $\gr{MPL}$.
-\itemz Soit $P$ un ensemble. Un objet de $\Mod(P)$ (appelé \il{modèle métrique}) est un espace métrique $(X,d)$ muni d'une fonction $\nu : P \to P(X)$ dite \il{de valuation}. Un morphisme $h : (X,d,\nu) \to (X',d',\nu')$ est une fonction continue telle que pour tout $p \in P$, $h(\nu(p)) \subseteq \nu'(p)$. Ceci est compatible avec les fonctions identités et la composition usuelle. Soit maintenant $\sigma : P \to P'$ et $(X',d',\nu')$ un $P'$-modèle. On définit le $P$-modèle $(X,d,\nu) = \Mod(\sigma)((X',d',\nu'))$ par $X = X'$, $d = d'$ et $\nu = \nu' \circ \sigma$. Il est facile de voir que $\Mod$ est un foncteur contravariant.
+\itemz Soit $P$ un ensemble. Un objet de $\Mod(P)$ (appelé \il{modèle métrique}) est un espace métrique $(X,d)$ muni d'une fonction $\nu : P \to P(X)$ dite \il{de valuation}. Un morphisme $h : (X,d,\nu) \to (X',d',\nu')$ est une fonction continue telle que pour tout $p \in P$, $h(\nu(p)) \subseteq \nu'(p)$. Ceci est compatible avec les fonctions identités et la composition usuelle. Soit maintenant $\sigma : P \to P'$ et $(X',d',\nu')$ un $P'$-modèle. On définit le $P$-modèle $(X,d,\nu) = \Mod(\sigma)((X',d',\nu'))$ par $X = X'$, $d = d'$ et $\nu = \nu' \circ \sigma$, et le $P$-morphisme $\Mod(\sigma)(h) = h$. Il est facile de voir que $\Mod$ est un foncteur contravariant.
 \itemz Comme pour $\gr{MPL}$, on dit que $(X,d,\nu) \models_P \ph$ lorsque $\forall x \in X, (X,d,\nu) \models_P^x \ph$, où l'on a défini par induction sur $\ph$ :
 \begin{itemize}
 \setlength\itemsep{-0.3em}
@@ -471,9 +476,28 @@ où la relation de droite est la satisfaction usuelle pour $\gr{PL}$, et vérifi
 \setlength\itemsep{-0.3em}
 \itemz Pour tout $P \in \gr{Sig}$, $(I,W,R) \in \Mod(P)$, on définit $\lb (I,W,R) \rb_P = (I,R)$.
 \itemz Pour tout $h : (I,W,R) \to (I',W',R')$, $\lb h \rb_P : (I,R) \to (I',R')$ est le morphisme de graphes sous-jacent à $h$. On a bien $\lb g \circ h \rb_P = \lb g \rb_P \circ \lb h \rb_P$.
-\itemz Pour tout $\sigma : P \to P'$, on définit $\lb (I,W,R) \rb_\sigma = id_{(I',R')}$. La commutation du diagramme se traduit par l'égalité suivante pour tout $h : (I,W,R) \to (I',W',R')$ : sapristi, j'ai oublié à chaque fois de définir $\Mod(\sigma)(h)$ pour un $h : \Mod(\sigma)(M) \to \Mod(\sigma)(M')$
-\[ \lb \Mod(\sigma)(h) \rb_P \circ \lb (I',W',R') \rb_\sigma =  \]
+\itemz Pour tout $\sigma : P \to P'$, on définit $\lb (I,W,R) \rb_\sigma = id_{(I,R)}$. Vu comme fonction, ce morphisme est bien surjectif. La commutation du diagramme se traduit par l'égalité suivante pour tout $h : (I,W,R) \to (I',W',R')$ :
+\[ \lb \Mod(\sigma)(h) \rb_P \circ \lb (I,W,R) \rb_\sigma =  \lb (I',W',R') \rb_\sigma \circ \lb h \rb_{P'}\]
+\[ \lb h \rb_P \circ id_{(I,R)} = id_{(I',R')} \circ \lb h \rb_{P'} \]
+ce qui est vrai car vues comme fonctions $I \to I'$ cela s'écrit $h = h$.
+\itemz On remarque que l'ensemble sous-jacent à $\lb (I,W,R) \rb_P$ est précisément $I$. On s'empresse donc de donner la même définition de la satisfaction $(I,W,R) \models_P^i \ph$ que dans le cas des institutions simples. On se fixe maintenant $\sigma : P \to P'$, $(I,W,R) \in \Mod(P')$, $i \in \lb (I,W,R) \rb_{P'}$, $\ph \in \Sen(\sigma)$. On doit vérifier la relation de satisfaction suivante:
+\[ \Mod(\sigma)(I,W,R) \models_P^{\lb (I,W,R) \rb_\sigma (i)} \ph \iff (I,W,R) \models_{P'}^i \Sen(\sigma)(\ph)\]
+qui se réécrit
+\[ (I,(W_i \circ \sigma)_{i \in I}, R) \models_P^{i} \ph \iff (I,W,R) \models_{P'}^i \sigma(\ph) \]
+C'est exactement ce que nous avons déjà prouvé dans le cas de $\gr{MPL}$ (équation (\ref{mplsat})).
 \end{itemize}
+\subsection{Liens entre institutions stratifiées et institutions}
+\begin{theo}
+Soit $\I$ une institution stratifiée. Alors $\I$ définit une institution.
+\end{theo} 
+\begin{proof}
+Il n'y a rien à vérifier concernant $\gr{Sig}$, $\Sen$, $\Mod$. On se fixe $\Sigma,\Sigma' \in \gr{Sig}$, $\sigma : \Sigma \to \Sigma'$, $M' \in \Mod(\Sigma')$ et $\ph \in \Sen(\Sigma)$. On doit vérifier que
+\[ \forall \eta' \in \lb M' \rb_{\Sigma'}, M' \models^{\eta'}_{\Sigma'} \Sen(\sigma)(\ph) \iff \forall \eta \in \lb \Mod(\sigma)(M') \rb_\Sigma, \Mod(\sigma)(M') \models^\eta_\Sigma \ph \] 
+On utilise le fait que $M' \models_{\Sigma'}^{\eta'} \Sen(\sigma)(\ph) \iff \Mod(\sigma)(M') \models_\Sigma^{\lb M' \rb_\sigma (\eta')} \ph$. Il faut désormais montrer:
+\[ \forall \eta' \in \lb M' \rb_{\Sigma'}, \Mod(\sigma)(M') \models_\Sigma^{\lb M' \rb_\sigma (\eta')} \ph \iff \forall \eta \in \lb \Mod(\sigma)(M') \rb_\Sigma, \Mod(\sigma)(M') \models^\eta_\Sigma \ph \]
+Ceci est vérifié dès lors qu'on a l'égalité ensembliste $\{ \lb M' \rb_\sigma(\eta') \mid \eta' \in \lb M' \rb_{\Sigma'} \} = \lb \Mod(\sigma)(M') \rb_\Sigma$. Or, $\lb M' \rb_\sigma : \lb M' \rb_{\Sigma'} \to \lb \Mod(\sigma)(M') \rb_\Sigma$ est un morphisme surjectif (par définition d'une institution stratifiée), donc l'égalité est vraie.
+\end{proof}
+{\color{purple} Stratification interne.}
 \newpage
 \section{Opérateurs duaux}
 On rencontre souvent des paires d'opérateurs duaux en mathématiques, comme $(\cap,\cup)$. En logique, on a les dualités $(\wedge,\vee)$, $(\forall,\exists)$ ou encore $(\square,\lozenge)$.
@@ -623,6 +647,7 @@ On note $\M = \prod_{i\in I} \M_i$ et $\M^* = \M / \U$. La preuve est par récur
 \cqfd
 \newpage
 \tableofcontents
+
 \end{document}
 
 git add truc.extension\\
