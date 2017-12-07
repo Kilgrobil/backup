@@ -495,9 +495,76 @@ Il n'y a rien à vérifier concernant $\gr{Sig}$, $\Sen$, $\Mod$. On se fixe $\S
 \[ \forall \eta' \in \lb M' \rb_{\Sigma'}, M' \models^{\eta'}_{\Sigma'} \Sen(\sigma)(\ph) \iff \forall \eta \in \lb \Mod(\sigma)(M') \rb_\Sigma, \Mod(\sigma)(M') \models^\eta_\Sigma \ph \] 
 On utilise le fait que $M' \models_{\Sigma'}^{\eta'} \Sen(\sigma)(\ph) \iff \Mod(\sigma)(M') \models_\Sigma^{\lb M' \rb_\sigma (\eta')} \ph$. Il faut désormais montrer:
 \[ \forall \eta' \in \lb M' \rb_{\Sigma'}, \Mod(\sigma)(M') \models_\Sigma^{\lb M' \rb_\sigma (\eta')} \ph \iff \forall \eta \in \lb \Mod(\sigma)(M') \rb_\Sigma, \Mod(\sigma)(M') \models^\eta_\Sigma \ph \]
-Ceci est vérifié dès lors qu'on a l'égalité ensembliste $\{ \lb M' \rb_\sigma(\eta') \mid \eta' \in \lb M' \rb_{\Sigma'} \} = \lb \Mod(\sigma)(M') \rb_\Sigma$. Or, $\lb M' \rb_\sigma : \lb M' \rb_{\Sigma'} \to \lb \Mod(\sigma)(M') \rb_\Sigma$ est un morphisme surjectif (par définition d'une institution stratifiée), donc l'égalité est vraie.
+Ceci est vérifié dès lors qu'on a l'égalité ensembliste 
+\[ \{ \lb M' \rb_\sigma(\eta') \mid \eta' \in \lb M' \rb_{\Sigma'} \} = \lb \Mod(\sigma)(M') \rb_\Sigma \] Or, $\lb M' \rb_\sigma : \lb M' \rb_{\Sigma'} \to \lb \Mod(\sigma)(M') \rb_\Sigma$ est un morphisme surjectif (par définition d'une institution stratifiée), donc l'égalité est vraie.
 \end{proof}
-{\color{purple} Stratification interne.}
+Il existe aussi un moyen de voir toute institution comme une institution stratifiée, via la \il{stratification interne}. Pour la définir, nous avons besoin de quelques notions auxiliaires.
+\begin{defi}[Quasi-représentabilité]
+Soit $\sigma : \Sigma \to \Sigma'$ un morphisme de signatures d'une institution $\I$. On dit qu'il est \il{quasi-représentable} si tout morphisme de $\Sigma'$-modèles de la forme $h : \Mod(\sigma)(M') \to N$ a une unique $\sigma$-expansion $h' : M' \to N'$, i.e., il existe un unique morphisme $h' : M' \to N'$, où $N' \in \Mod(\Sigma')$, tel que $h = \Mod(\sigma)(h')$. 
+\end{defi}
+\begin{defi}[Carré d'amalgamation]
+Soit $\I$ une institution. Un diagramme commutatif de morphismes de signatures de la forme
+\begin{center}
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes,row sep=3em,column sep=4em,minimum width=2em]
+  {
+     \Sigma & \Sigma' \\
+     \Sigma_1 & \Sigma'_1 \\};
+  \path[-stealth]
+    (m-1-1) edge node [left] {$\ph$} (m-2-1)
+    (m-2-1) edge node [below] {$\chi_1$}(m-2-2)
+    (m-1-1) edge node [above] {$\chi$} (m-1-2)
+    (m-1-2) edge node [right] {$\ph'$} (m-2-2);
+\end{tikzpicture}
+\end{center}
+est dit \il{carré d'amalgamation} lorsque pour tous $\Sigma'$-modèle $M'$, $\Sigma_1$-modèle $M_1$ tels que $\Mod(\chi)(M') = \Mod(\ph)(M_1)$, il existe un unique $\Sigma'_1$-modèle $M'_1$, appelé \il{amalgamation} de $M'$ et $M_1$, tel que $\Mod(\ph')(M'_1) = M'$ et $\Mod(\chi_1)(M'_1) = M_1$. On note $M'_1 = M' \otimes_{\chi,\ph} M_1$ ou encore $M'_1 = M' \otimes M_1$. Si l'unicité n'est pas garantie, on dit qu'il s'agit d'un \il{carré d'amalgamation faible}.
+\end{defi}
+Soit $\I = (\gr{Sig}, \Sen, \Mod, \models)$ une institution. On définit son institution stratifiée interne $St(\I) = (\gr{Sig}', \Sen', \Mod', \lb - \rb, \models)$ par :
+\begin{itemize}
+\itemz La catégorie $\gr{Sig}'$ a pour objets les morphismes de signatures de $\gr{Sig}$ quasi-représentables. Un morphisme de $\gr{Sig}'$ est une paire de morphismes de $\gr{Sig}$
+\[ (\ph : \Sigma \to \Sigma_1, \ph' : \Sigma' \to \Sigma'_1) : (\chi : \Sigma \to \Sigma') \to (\chi_1 : \Sigma_1 \to \Sigma'_1) \] telle que la diagramme suivant est un carré d'amalgamation faible :
+\begin{center}
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes,row sep=3em,column sep=4em,minimum width=2em]
+  {
+     \Sigma & \Sigma' \\
+     \Sigma_1 & \Sigma'_1 \\};
+  \path[-stealth]
+    (m-1-1) edge node [left] {$\ph$} (m-2-1)
+    (m-2-1) edge node [below] {$\chi_1$}(m-2-2)
+    (m-1-1) edge node [above] {$\chi$} (m-1-2)
+    (m-1-2) edge node [right] {$\ph'$} (m-2-2);
+\end{tikzpicture}
+\end{center}
+La composition est définie par $(\psi,\psi') \circ (\ph,\ph') = (\psi \circ \ph , \psi' \circ \ph')$. On obtient bien un carré d'amalgamation faible.
+\begin{center}
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes,row sep=3em,column sep=4em,minimum width=2em]
+  {
+     \Sigma & \Sigma' \\
+     \Sigma_1 & \Sigma'_1 \\
+     \Sigma_2 & \Sigma'_2 \\};
+  \path[-stealth]
+    (m-1-1) edge node [left] {$\ph$} (m-2-1)
+    (m-2-1) edge node [below] {$\chi_1$}(m-2-2)
+    (m-1-1) edge node [above] {$\chi$} (m-1-2)
+    (m-1-2) edge node [right] {$\ph'$} (m-2-2)
+    (m-2-1) edge node [left] {$\psi$} (m-3-1)
+    (m-3-1) edge node [below] {$\chi_2$} (m-3-2)
+    (m-2-2) edge node [right] {$\psi'$} (m-3-2);
+\end{tikzpicture}
+\end{center}
+En effet, prenons un modèle $M'$ de $\Sigma'$ et un modèle  $M_2$ de $\Sigma_2$ tels que $\Mod(\chi)(M') = \Mod(\psi \circ \ph)(M_2)$. Alors
+\[ \Mod(\ph) (\Mod(\psi)(M_2)) = (\Mod(\ph) \circ \Mod(\psi))(M_2) = \Mod(\psi \circ \ph)(M_2) = \Mod(\chi)(M') \]
+Le carré du haut est d'amalgamation faible, donc on obtient un modèle $M'_1$ pour $\Sigma'_1$ tel que $\Mod(\chi_1)(M'_1) = \Mod(\psi)(M_2)$ et $\Mod(\ph')(M'_1) = M'$. On peut maintenant amalgamer $M'_1$ et $M_2$. On obtient un $M'_2$ tel que $\Mod(\chi_2)(M'_2) = M_2$ et $\Mod(\psi')(M'_2) = M'_1$. Pour conclure que le grand rectangle est d'amalgamation faible, il suffit de remarquer que $\Mod(\chi_2)(M'_2) = M_2$ et $\Mod(\psi'\circ\ph')(M'_2) = \Mod(\ph')(M'_1) = M'$.\\\\
+La composition dans $\gr{Sig}'$ est clairement associative, par associativité de la composition dans $\gr{Sig}$. L'identité de $(\chi : \Sigma \to \Sigma')$ est $(id_\Sigma,id_{\Sigma'})$.
+\itemz Le foncteur $\Sen' : \gr{Sig} \to \gr{Set}$ est défini par
+\begin{align*}
+&\Sen'(\chi : \Sigma \to \Sigma') = \Sen(\Sigma') \\
+&\Sen'((\ph,\ph') : \chi \to \chi_1) = \Sen(\ph') 
+\end{align*}
+\itemz 
+\end{itemize}
 \newpage
 \section{Opérateurs duaux}
 On rencontre souvent des paires d'opérateurs duaux en mathématiques, comme $(\cap,\cup)$. En logique, on a les dualités $(\wedge,\vee)$, $(\forall,\exists)$ ou encore $(\square,\lozenge)$.
