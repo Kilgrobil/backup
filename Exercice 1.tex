@@ -5,8 +5,9 @@
 
 \usepackage{amsthm}
 \newtheorem{theo}{Theorem}
-\newtheorem{defi}[theo]{Definition}
-\newtheorem{prop}[theo]{Proposition}
+\newtheorem{defi}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{lem}{Lemma}
 
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -44,6 +45,7 @@
 \newcommand{\Sen}{\info{Sen}}
 \newcommand{\1}{\mathbbm{1}}
 \renewcommand{\P}{\mathcal{P}}
+\newcommand{\D}{\mathcal{D}}
 
 \usepackage[bitstream-charter]{mathdesign}
 %\usepackage[charter]{mathdesign}
@@ -95,5 +97,41 @@ The inequality $|\langle Ax , y \rangle| \leq [A] \cdot ||x|| \cdot ||y||$ is un
 by the parallelogram identity. Take $x \mapsto \sqrt{\frac{||y||}{||x||}} x$, $y \mapsto \sqrt{\frac{||x||}{||y||}} y$ to get the  desired inequality:
 \[ |\langle Ax , y \rangle| \leq [A] \cdot ||x|| \cdot ||y|| \]
 This completes the proof that $[A] = ||A||$.
+\newpage
+\section*{Exercise.}
+\il{Let $X$ be a Banach space. Prove that if a sequence $(x_n)_{n\in\N}$ is a relatively compact set and converges weakly in $X$, then $(x_n)_{n\in\N}$ converges strongly in $X$.}\\\\
+Let $x \in X$ be the weak limit of $(x_n)_{n\in\N}$. If $x_n \not\to x$ then it is possible to find an $\varepsilon > 0$ such that
+\[ \forall n \in \N , \exists k \geq n , ||x_k-x|| \geq \varepsilon \]
+so we can extract a subsequence $(x_{\ph(n)})_{n\in\N}$ such that for all $n \in \N$, $||x_{\ph(n)} - x|| \geq \varepsilon$. The sequence $(x_{\ph(n)})_{n\in\N}$ is contained in the compact set $\overline{\{x_n\mid n \in \N\}}$, so it has a converging subsequence $x_{(\ph \circ \psi)(n)}\to y \in X$. Strong convergence implies weak convergence, so $x_{(\ph \circ \psi)(n)} \rightharpoonup y$. Moreover, $x_n \rightharpoonup x$ so we have $x_{(\ph \circ \psi)(n)} \rightharpoonup x$. Uniqueness of the weak limit yields $y = x$. Hence $x_{(\ph \circ \psi)(n)} \to x$. But by definition of $\ph$, for every $n \in \N$ we have $||x_{(\ph\circ\psi)(n)} - x|| > \varepsilon$. There is a contradiction. Thus $x_n \to x$.
+\section*{Exercise.}
+\il{Let $X,Y$ be Banach spaces. Let $A \in \mathcal{K}(X,Y)$. Prove that if $x_n \rightharpoonup x \in X$ then $Ax_n \to Ax \in Y$.}\\\\
+Assume $x_n \rightharpoonup x \in X$. Then $\{x_n \mid n\in\N \}$ is bounded. As $A$ is a compact operator, $\{ Ax_n \mid n\in\N\}$ is relatively compact.\\\\
+Let $\phi \in \La(Y)$, then $\phi \circ A \in \La(X)$. As $x_n \rightharpoonup x$, we have $(\phi \circ A)(x_n) \to (\phi \circ A)(x)$ i.e. $\phi(Ax_n) \to \phi(Ax)$. This proves that $Ax_n \rightharpoonup Ax$.\\\\
+The sequence $(Ax_n)_{n\in\N}$ is a relatively compact set and converges weakly (towards $Ax$) in $Y$. According to the preceding exercise, $Ax_n \to Ax$.\newpage
 
+\section*{Proposition 7.2.1.}
+Let $f(x) \in \mathcal{D}'(\R^n)$ and $g(y) \in \mathcal{D}'(\R^m)$. In the following, $x$ implicitly belongs to the first space $\R^n$, and $y$ implicitly belongs to the second space $\R^m$.
+\subsection*{(1)}
+\begin{defi}
+Let $\D(\R^n) \otimes \D(\R^m) \subseteq \D(\R^{n+m})$ be the space of test functions of the form $\ph(x,y) = \psi(x)\theta(y)$, where $\psi \in \D(\R^n)$ and $\theta \in \D(\R^m)$.
+\end{defi}
+\begin{lem}
+The space $\textnormal{Span}(\D(\R^n) \otimes \D(\R^m))$ is dense in $\D(\R^{n+m})$.
+\end{lem}
+Let us prove the commutativity for all $\ph(x,y) = \sum_{i=1}^N \psi_i(x)\theta_i(y) \in \textnormal{Span}(\D(\R^n) \otimes \D(\R^m))$.
+\begin{align*}
+\langle f(x) \times g(y) , \psi(x)\theta(y) \rangle
+\end{align*}
+\subsection*{(4)}
+Let $\alpha \in \N^{n+m}$ be a multi-index such that its last $m$ components are $0$. Then it can be viewed as a multi-index in $\N^n$, and we can write $D^\alpha_{(x,y)} = D^\alpha_x$. It is then easy to see that for any $\ph \in \mathcal{D}(\R^{n+m})$
+\begin{align*}
+\langle D^\alpha_x (f(x) \times g(y)) , \ph \rangle
+& = (-1)^{|\alpha|} \langle f(x) \times g(y) , D^\alpha_x \ph \rangle \\
+& = (-1)^{|\alpha|} \langle g(y) \times f(x) , D^\alpha_x \ph \rangle \\
+& = (-1)^{|\alpha|} \langle g(y) , \langle f(x) , D^\alpha_x \ph \rangle \rangle \\
+& = \langle g(y) , \langle D^\alpha_x f(x) , \ph \rangle \rangle \\
+& = \langle g(y) \times D^\alpha_x f(x) , \ph \rangle \\
+& = \langle D^\alpha_x f(x) \times g(y) , \ph \rangle 
+\end{align*} 
+This yields $D^\alpha_x (f(x) \times g(y)) = D^\alpha_x f(x) \times g(y)$.
 \end{document}
