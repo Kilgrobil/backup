@@ -102,7 +102,7 @@ This completes the proof that $[A] = ||A||$.
 \il{Let $X$ be a Banach space. Prove that if a sequence $(x_n)_{n\in\N}$ is a relatively compact set and converges weakly in $X$, then $(x_n)_{n\in\N}$ converges strongly in $X$.}\\\\
 Let $x \in X$ be the weak limit of $(x_n)_{n\in\N}$. If $x_n \not\to x$ then it is possible to find an $\varepsilon > 0$ such that
 \[ \forall n \in \N , \exists k \geq n , ||x_k-x|| \geq \varepsilon \]
-so we can extract a subsequence $(x_{\ph(n)})_{n\in\N}$ such that for all $n \in \N$, $||x_{\ph(n)} - x|| \geq \varepsilon$. The sequence $(x_{\ph(n)})_{n\in\N}$ is contained in the compact set $\overline{\{x_n\mid n \in \N\}}$, so it has a converging subsequence $x_{(\ph \circ \psi)(n)}\to y \in X$. Strong convergence implies weak convergence, so $x_{(\ph \circ \psi)(n)} \rightharpoonup y$. Moreover, $x_n \rightharpoonup x$ so we have $x_{(\ph \circ \psi)(n)} \rightharpoonup x$. Uniqueness of the weak limit yields $y = x$. Hence $x_{(\ph \circ \psi)(n)} \to x$. But by definition of $\ph$, for every $n \in \N$ we have $||x_{(\ph\circ\psi)(n)} - x|| > \varepsilon$. There is a contradiction. Thus $x_n \to x$.
+so we can extract a subsequence $(x_{\ph(n)})_{n\in\N}$ such that for all $n \in \N$, $||x_{\ph(n)} - x|| \geq \varepsilon$. The sequence $(x_{\ph(n)})_{n\in\N}$ is contained in the compact set $\overline{\{x_n\mid n \in \N\}}$, so it has a converging subsequence $x_{(\ph \circ \psi)(n)}\to y \in X$. Strong convergence implies weak convergence, so $x_{(\ph \circ \psi)(n)} \rightharpoonup y$. Moreover, $x_n \rightharpoonup x$ so we have $x_{(\ph \circ \psi)(n)} \rightharpoonup x$. Uniqueness of the weak limit yields $y = x$. Hence $x_{(\ph \circ \psi)(n)} \to x$. But by definition of $\ph$, for every $n \in \N$ we have $||x_{(\ph\circ\psi)(n)} - x|| \geq \varepsilon$. There is a contradiction. Thus $x_n \to x$.
 \section*{Exercise.}
 \il{Let $X,Y$ be Banach spaces. Let $A \in \mathcal{K}(X,Y)$. Prove that if $x_n \rightharpoonup x \in X$ then $Ax_n \to Ax \in Y$.}\\\\
 Assume $x_n \rightharpoonup x \in X$. Then $\{x_n \mid n\in\N \}$ is bounded. As $A$ is a compact operator, $\{ Ax_n \mid n\in\N\}$ is relatively compact.\\\\
@@ -111,24 +111,29 @@ The sequence $(Ax_n)_{n\in\N}$ is a relatively compact set and converges weakly 
 
 \section*{Proposition 7.2.1.}
 Let $f(x) \in \mathcal{D}'(\R^n)$ and $g(y) \in \mathcal{D}'(\R^m)$. In the following, $x$ implicitly belongs to the first space $\R^n$, and $y$ implicitly belongs to the second space $\R^m$.
-\subsection*{(1)}
+\subsection*{(1) Commutativity of the direct product}
 \begin{defi}
 Let $\D(\R^n) \otimes \D(\R^m) \subseteq \D(\R^{n+m})$ be the space of test functions of the form $\ph(x,y) = \psi(x)\theta(y)$, where $\psi \in \D(\R^n)$ and $\theta \in \D(\R^m)$.
 \end{defi}
-\begin{lem}
+\begin{lem} \label{density}
 The space $\textnormal{Span}(\D(\R^n) \otimes \D(\R^m))$ is dense in $\D(\R^{n+m})$.
 \end{lem}
 Let us prove the commutativity for all $\ph(x,y) = \sum_{i=1}^N \psi_i(x)\theta_i(y) \in \textnormal{Span}(\D(\R^n) \otimes \D(\R^m))$.
 \begin{align*}
-\langle f(x) \times g(y) , \psi(x)\theta(y) \rangle
+\left\langle f \times g  , \ph \right\rangle
+& = \left\langle f(x) , \left\langle g(y) , \sum_{i=1}^N \psi_i(x)\theta_i(y) \right\rangle \right\rangle \\
+& = \left\langle f(x) , \sum_{i=1}^N \psi_i(x) \langle g(y) , \theta_i(y) \rangle \right\rangle \\
+& = \sum_{i=1}^N \langle f , \psi_i \rangle \langle g , \theta_i \rangle
 \end{align*}
-\subsection*{(4)}
+In the same fashion, $\langle g \times f , \ph \rangle = \sum_{i=1}^N \langle f,\psi_i \rangle \langle g , \theta_i \rangle$. Hence $\langle g \times f , \ph \rangle = \langle f \times g , \ph \rangle$.\\\\
+Now let $\ph \in \D(\R^{n+m})$ be any test function. Because of lemma \ref{density}, there exists a sequence $(\ph_k)_{k\in\N}$ of functions in $\textnormal{Span}(\D(\R^n) \otimes \D(\R^m))$ such that $\ph_k \to \ph$. Using the continuity of $f \times g$ and $g \times f$, we have $\langle f \times g , \ph \rangle = \lim_{k\to +\infty} \langle f \times g , \ph_k \rangle = \lim_{k\to +\infty} \langle g \times f , \ph_k \rangle = \langle g \times f , \ph \rangle$, so that we have finally $f \times g = g \times f$.
+\subsection*{(4) Derivation of the direct product}
 Let $\alpha \in \N^{n+m}$ be a multi-index such that its last $m$ components are $0$. Then it can be viewed as a multi-index in $\N^n$, and we can write $D^\alpha_{(x,y)} = D^\alpha_x$. It is then easy to see that for any $\ph \in \mathcal{D}(\R^{n+m})$
 \begin{align*}
 \langle D^\alpha_x (f(x) \times g(y)) , \ph \rangle
-& = (-1)^{|\alpha|} \langle f(x) \times g(y) , D^\alpha_x \ph \rangle \\
-& = (-1)^{|\alpha|} \langle g(y) \times f(x) , D^\alpha_x \ph \rangle \\
-& = (-1)^{|\alpha|} \langle g(y) , \langle f(x) , D^\alpha_x \ph \rangle \rangle \\
+& = (-1)^{|\alpha|} \langle f(x) \times g(y) , \partial^\alpha_x \ph \rangle \\
+& = (-1)^{|\alpha|} \langle g(y) \times f(x) , \partial^\alpha_x \ph \rangle \\
+& = (-1)^{|\alpha|} \langle g(y) , \langle f(x) , \partial^\alpha_x \ph \rangle \rangle \\
 & = \langle g(y) , \langle D^\alpha_x f(x) , \ph \rangle \rangle \\
 & = \langle g(y) \times D^\alpha_x f(x) , \ph \rangle \\
 & = \langle D^\alpha_x f(x) \times g(y) , \ph \rangle 
