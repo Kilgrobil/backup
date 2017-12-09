@@ -54,7 +54,7 @@
 
 \begin{document}
 
-\section*{Problem 2.1.2}
+\section*{I - Problem 2.1.2}
 
 Assume $A \cap B \neq \emptyset$. Let $c \in A \cap B$. Then $0 \leq z(A,B) = \inf_{(a,b) \in A \times B} d(a,b) \leq d(c,c) = 0$ so that $z(A,B) = 0$. The converse is not always true: if $X = \R$ and $d(x,y) = |x-y|$, take $A = \{0\}$ and $B = \R_+^*$. Then $A \cap B = 0$ but for all $\varepsilon > 0$ we have $\varepsilon \in B$ so $z(A,B) = d(0,B) \leq d(0,\varepsilon) = \varepsilon$. Thus $z(A,B) = 0$.\\\\
 Concerning the second question, first note that if $X = \R$ and $d(x,y) = |x-y|$, taking $A = \{0\}$ and $B = \R_+^*$ yields $\sup_{b \in B} \inf_{a\in A} d(a,b) = sup_{\varepsilon > 0} \varepsilon = +\infty$. For the function $d_H$ to be finite, we have thus to impose further that we are considering only \il{bounded} closed non-empty subsets of $X$. 
@@ -74,7 +74,7 @@ Let $A,B,C \in E$. First, remark that $d_H(A,B) = \max\{ \sup_{a \in A} d(a,B) ,
 \item[(iv)] Let $a \in A$, $b\in B$, $c\in C$. Then $d(a,b) \leq d(a,c) + d(c,b)$. Because $d(a,c)$ does not depend on $b$, taking the infimum for $b \in B$ yields $d(a,B) \leq d(a,c) + d(c,B)$. As $d(c,B) \leq d_H(C,B)$ we get $d(a,B) \leq d(a,c) + d_H(C,B)$. Taking the infimum for $c \in C$ yields $d(a,B) \leq d(a,C) + d_H(C,B)$. As $d(a,C) \leq d_H(A,C)$ we get $d(a,B) \leq d_H(A,C) + d_H(C,B)$, thus $\sup_{a\in A} d(a,B) \leq d_H(A,C) + d_H(C,B)$. With the same methode one can prove that $\sup_{b\in B} d(b,A) \leq d_H(A,C) + d_H(C,B)$. Thus, $d_H(A,B) \leq d_H(A,C) + d_H(C,B)$.
 \end{itemize}
 \newpage
-\section*{Problem 4.7.2}
+\section*{II - Problem 4.7.2}
 $(i) \Rightarrow (ii)$. Assume $A$ is hermitian. Then $f_A(x,y) = \langle Ax, y \rangle = \langle x, Ay \rangle = \overline{\langle Ay , x \rangle} = \overline{ f_A(y,x) }$.\\\\
 $(ii) \Rightarrow (iii)$. Assume $f_A$ is hermitian. Then $\phi_A(x) = \langle Ax, x \rangle = \overline{ \langle Ax , x \rangle}$ so $\langle Ax , x \rangle \in \R$.\\\\
 $(iii) \Rightarrow (i)$. Assume $\phi_A$ is real. Then for any $x,y \in H$:
@@ -98,24 +98,24 @@ by the parallelogram identity. Take $x \mapsto \sqrt{\frac{||y||}{||x||}} x$, $y
 \[ |\langle Ax , y \rangle| \leq [A] \cdot ||x|| \cdot ||y|| \]
 This completes the proof that $[A] = ||A||$.
 \newpage
-\section*{Exercise.}
+\section*{III - Exercise}
 \il{Let $X$ be a Banach space. Prove that if a sequence $(x_n)_{n\in\N}$ is a relatively compact set and converges weakly in $X$, then $(x_n)_{n\in\N}$ converges strongly in $X$.}\\\\
 Let $x \in X$ be the weak limit of $(x_n)_{n\in\N}$. If $x_n \not\to x$ then it is possible to find an $\varepsilon > 0$ such that
 \[ \forall n \in \N , \exists k \geq n , ||x_k-x|| \geq \varepsilon \]
 so we can extract a subsequence $(x_{\ph(n)})_{n\in\N}$ such that for all $n \in \N$, $||x_{\ph(n)} - x|| \geq \varepsilon$. The sequence $(x_{\ph(n)})_{n\in\N}$ is contained in the compact set $\overline{\{x_n\mid n \in \N\}}$, so it has a converging subsequence $x_{(\ph \circ \psi)(n)}\to y \in X$. Strong convergence implies weak convergence, so $x_{(\ph \circ \psi)(n)} \rightharpoonup y$. Moreover, $x_n \rightharpoonup x$ so we have $x_{(\ph \circ \psi)(n)} \rightharpoonup x$. Uniqueness of the weak limit yields $y = x$. Hence $x_{(\ph \circ \psi)(n)} \to x$. But by definition of $\ph$, for every $n \in \N$ we have $||x_{(\ph\circ\psi)(n)} - x|| \geq \varepsilon$. There is a contradiction. Thus $x_n \to x$.
-\section*{Exercise.}
+\section*{IV - Exercise}
 \il{Let $X,Y$ be Banach spaces. Let $A \in \mathcal{K}(X,Y)$. Prove that if $x_n \rightharpoonup x \in X$ then $Ax_n \to Ax \in Y$.}\\\\
 Assume $x_n \rightharpoonup x \in X$. Then $\{x_n \mid n\in\N \}$ is bounded. As $A$ is a compact operator, $\{ Ax_n \mid n\in\N\}$ is relatively compact.\\\\
 Let $\phi \in \La(Y)$, then $\phi \circ A \in \La(X)$. As $x_n \rightharpoonup x$, we have $(\phi \circ A)(x_n) \to (\phi \circ A)(x)$ i.e. $\phi(Ax_n) \to \phi(Ax)$. This proves that $Ax_n \rightharpoonup Ax$.\\\\
 The sequence $(Ax_n)_{n\in\N}$ is a relatively compact set and converges weakly (towards $Ax$) in $Y$. According to the preceding exercise, $Ax_n \to Ax$.\newpage
 
-\section*{Proposition 7.2.1.}
+\section*{V - Proposition 7.2.1}
 Let $f(x) \in \mathcal{D}'(\R^n)$ and $g(y) \in \mathcal{D}'(\R^m)$. In the following, $x$ implicitly belongs to the first space $\R^n$, and $y$ implicitly belongs to the second space $\R^m$.
 \subsection*{(1) Commutativity of the direct product}
 \begin{defi}
 Let $\D(\R^n) \otimes \D(\R^m) \subseteq \D(\R^{n+m})$ be the space of test functions of the form $\ph(x,y) = \psi(x)\theta(y)$, where $\psi \in \D(\R^n)$ and $\theta \in \D(\R^m)$.
 \end{defi}
-\begin{lem} \label{density}
+\begin{lem}[Proved next page.] \label{density}
 The space $\textnormal{Span}(\D(\R^n) \otimes \D(\R^m))$ is dense in $\D(\R^{n+m})$.
 \end{lem}
 Let us prove the commutativity for all $\ph(x,y) = \sum_{i=1}^N \psi_i(x)\theta_i(y) \in \textnormal{Span}(\D(\R^n) \otimes \D(\R^m))$.
@@ -138,5 +138,31 @@ Let $\alpha \in \N^{n+m}$ be a multi-index such that its last $m$ components are
 & = \langle g(y) \times D^\alpha_x f(x) , \ph \rangle \\
 & = \langle D^\alpha_x f(x) \times g(y) , \ph \rangle 
 \end{align*} 
-This yields $D^\alpha_x (f(x) \times g(y)) = D^\alpha_x f(x) \times g(y)$.
+This yields $D^\alpha_x (f(x) \times g(y)) = D^\alpha_x f(x) \times g(y)$.\newpage
+\subsection*{Proof of lemma \ref{density}}
+Let $\ph \in \D(\R^{n+m})$. We will find a sequence $(\ph_k)_{k\in\N}$ in $\textnormal{Span}(\D(\R^n)\otimes\D(\R^m))$ such that $\ph_k \to \ph$. In the following, $B^N(0,r)$ denotes the open ball of center $0$ and radius $r$ in $\R^N$.\\\\ First find some $r > 0$ such that the support of $\ph$ is contained in $B^n(0,r) \times B^m(0,r) \subseteq \R^{n+m}$. According to the Weierstrass theorem, there is a sequence $(P_k)_{k\in\N}$ of polynomials such that for all $\alpha$ such that $|\alpha|\leq k$ and for all $(x,y) \in \overline{B^n(0,2r)}\times \overline{B^m(0,2r)}$:
+\[ |D^\alpha P_k(x,y) - D^\alpha \ph(x,y) | \leq \frac{1}{2^k}\]
+Let $d \in \D(\R^n)$ and $e \in \D(\R^m)$ be such that
+\begin{align*}
+& d(x) = 1 \text{ if } x \in B^n(0,r) & e(y) = 1 \text{ if } y \in B^m(0,r) \\
+& d(x) = 0 \text{ if } x \not\in B^n(0,2r) & e(y) = 0 \text{ if } y \not\in B^m(0,2r)
+\end{align*}
+Let $\alpha \in \N^{n+m}$ be a multi-index. Define
+\begin{align*} & ||d||_\alpha = \sup_{\beta \leq \alpha} \left(\sup_{x \in B^n(0,2r)} |D^\beta d (x)|\right) < +\infty 
+& ||e||_\alpha = \sup_{\beta \leq \alpha} \left(\sup_{y \in B^n(0,2r)} |D^\beta e(y) | \right) < +\infty \end{align*}
+Define $\ph_k(x,y) = d(x)e(y)P_k(x,y)$. Because $P_k(x,y)$ is a polynomial, it is a finite sum of functions of the shape $\psi(x)\theta(y)$. Thus $\ph_k \in \textnormal{Span}(\D(\R^n) \otimes \D(\R^m))$. Let us show that $\ph_k \to \ph$ when $k \to +\infty$.\\\\
+First, remark that for all $k \in \N$, the support of $\ph_k$ is contained into the compact $K = \overline{B^n(0,2r)} \times \overline{B^m(0,2r)}$. Let $\alpha \in \N^{n+m}$ be a multi-index. Consider for every $(x,y) \in K$ the quantity $|D^\alpha \ph_k(x,y) - D^\alpha \ph(x,y) |$ where we take $k \geq |\alpha|$.\\\\
+\gr{First case.} If $(x,y) \in B^n(0,r) \times B^m(0,r)$ then $\ph_k = P_k$ so that
+\[ |D^\alpha \ph_k(x,y) - D^\alpha \ph(x,y) | \leq \frac{1}{2^k} \]
+\gr{Second case.} If $(x,y) \in K \setminus \left( B^n(0,r) \times B^m(0,r) \right)$ then use the triangular inequality:
+\[ |D^\alpha \ph_k(x,y) - D^\alpha \ph(x,y) | \leq |D^\alpha (deP_k)(x,y) - D^\alpha (de\ph)(x,y) | + |D^\alpha (de\ph)(x,y) - D^\alpha \ph(x,y)| \]
+The last term is zero because $\ph =0 $ uniformly on this set. Furthermore
+\begin{align*}
+|D^\alpha (deP_k)(x,y) - D^\alpha (de\ph)(x,y) | & = |D^\alpha (de(P_k - \ph))(x,y)| \\
+& = \left| \sum_{\beta \leq \alpha} \binom{\alpha}{\beta} \left(\sum_{\gamma \leq \beta} \binom{\beta}{\gamma} (D^\gamma d) (D^{\beta - \gamma} e) \right) D^{\alpha - \beta}(P_k - \ph) \right| \\
+& \leq ||d||_\alpha ||e||_\alpha \sum_{\beta \leq \alpha} \binom{\alpha}{\beta} \sum_{\gamma \leq \beta} \binom{\beta}{\gamma} | D^{\alpha - \beta} (P_k - \ph) | \leq \frac{C_\alpha}{2^k}
+\end{align*}
+where $C_\alpha = ||d||_\alpha ||e||_\alpha \sum_{\beta \leq \alpha} \sum_{\gamma \leq \beta} \binom{\alpha}{\beta} \binom{\beta}{\gamma}$ is independent of $k$. Thus $D^\alpha \ph_k$ converges uniformly towards $D^\alpha \ph$. This completes the proof that $\ph_k \to \ph$ when $k \to +\infty$. Hence $\textnormal{Span}(\D(\R^n) \otimes \D(\R^m))$ is dense in $\D(\R^{n+m})$.\newpage
+\section*{VI - Exercise}
+\il{Let $\Omega \subseteq \R^n$ be a compact domain. Prove that the injection $W^2_2 \hookrightarrow L^2$ is compact if the boundary $\partial\Omega$ is sufficiently regular.}
 \end{document}
