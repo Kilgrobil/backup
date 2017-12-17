@@ -123,7 +123,7 @@ Let $\gr{C}$ be a category and $A$ an object. $I$ is an initial object if for an
 \section{$F$-algebras}
 Now we know what is a category and what is a functor. These are the only tools we need in order to formalize properly mathematical induction, through what is called $F$-algebras.
 \begin{defi}
-Let $\gr{C}$ be a category and and $F : \gr{C} \to \gr{C}$ be a functor. (Note that this is an endofunctor: the domain category is the same as the codomain category.) An $F$-algebra is a morphism $\alpha : F(A) \to A$, where $A$ is an object of $\gr{C}$ called the carrier of $\alpha$.
+Let $\gr{C}$ be a category and $F : \gr{C} \to \gr{C}$ be a functor. (Note that this is an endofunctor: the domain category is the same as the codomain category.) An $F$-algebra is a morphism $\alpha : F(A) \to A$, where $A$ is an object of $\gr{C}$ called the carrier of $\alpha$.
 \end{defi}
 \begin{defi} Let $\alpha : F(A) \to A$ and $\beta : F(B) \to B$ be two $F$-algebras. A homomorphism of $F$-algebras from $\alpha$ to $\beta$ is a morphism $h : A \to B$ such that $\beta \circ F(h) = h \circ \alpha$.
 \end{defi}
@@ -217,7 +217,9 @@ For exemple, let us draw the tree $\Node(\Leaf,\Node(\Node(\Leaf,\Leaf),\Leaf))$
     (m-3-2) edge node {} (m-4-3);
 \end{tikzpicture}
 \end{center}
-These three data types are widely used in computer science, and it turns out that there is a good reason for this. Indeed, each of these data types can be seen as the initial algebra of some functor $F$. In addition to proving that these data types are mathematically canonical, this allows automatic factorization of other $F$-algebras.
+These three data types are widely used in computer science, and it turns out that there is a good reason for this. Indeed, each of these data types can be seen as the initial algebra of some functor $F$. In addition to proving that these data types are mathematically canonical, this allows automatic factorization of other $F$-algebras.\newpage
+The following table sums up the categorical formalization of these three data types.\\
+(The proportion of the table explained will depend on the time left for the presentation.)
 \begin{center}
 \begin{tabular}{|l|l|l|l|}
   \hline
@@ -231,12 +233,13 @@ These three data types are widely used in computer science, and it turns out tha
   \gr{Functor} & $F(A) = 1 + A$ & $F(A) = 1 + C \times A$ & $F(A) = 1 + A \times A$ \\
   & $F(f) = id_1 + f$ & $F(f) = id_1 + id_C \times f$ & $F(f) = id_1 + f \times f$ \\
   & & & \\
-  \gr{Initial algebra} & $\iota : 1 + \N \to \N$ & $\iota : 1 + C \times \List(C)$ & $\iota : 1 + \Tree \times \Tree$ \\
-  & $\iota(*) = 0$ & $\iota(*) = []$ & $\iota(*) = \Leaf$ \\
+  \gr{Initial} & $1 + \N \to \N$ & $1 + C \times \List(C) \to \List(C)$ & $1 + \Tree \times \Tree \to \Tree$ \\
+  \gr{algebra} & $\iota(*) = 0$ & $\iota(*) = []$ & $\iota(*) = \Leaf$ \\
   & $\iota(n) = n+1$ & $\iota(c,l) = c::l$ & $\iota(L,R) = \Node(L,R)$ \\
   & & & \\
   \gr{Diagram} & $\lb \alpha \rb(0) = \alpha(*)$ & $\lb \alpha \rb([]) = \alpha(*)$ & $\lb \alpha \rb(\Leaf) = \alpha(*)$ \\
-  & {\scriptsize $\lb \alpha \rb(n+1) = \alpha(\lb \alpha \rb(n))$} & {\scriptsize $\lb \alpha \rb (c::l)  = \alpha(c,\lb \alpha \rb(l))$} & {\scriptsize $\lb \alpha \rb (\Node(L,R)) = \alpha (\lb \alpha \rb (L) , \lb \alpha \rb (R))$} \\
+  & $\lb \alpha \rb(n+1) $ & $\lb \alpha \rb (c::l)  $ & $\lb \alpha \rb (\Node(L,R)) $ \\
+  & $ = \alpha(\lb \alpha \rb(n))$ & $= \alpha(c,\lb \alpha \rb(l))$ & $= \alpha (\lb \alpha \rb (L) , \lb \alpha \rb (R))$ \\
   \hline
 \end{tabular}
 \end{center}
