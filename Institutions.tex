@@ -563,7 +563,21 @@ La composition dans $\gr{Sig}'$ est clairement associative, par associativité d
 &\Sen'(\chi : \Sigma \to \Sigma') = \Sen(\Sigma') \\
 &\Sen'((\ph,\ph') : \chi \to \chi_1) = \Sen(\ph') 
 \end{align*}
-\itemz 
+\itemz Le foncteur contravariant $\Mod' : \gr{Sig} \to \gr{Cat}$ est défini par 
+\begin{align*} 
+& \Mod'((\chi : \Sigma \to \Sigma')) = \Mod(\Sigma) \\
+& \Mod'((\ph,\ph') : \chi \to \chi_1) = \Mod(\ph)
+\end{align*}
+\itemz Pour tout $\chi : \Sigma \to \Sigma'$, le foncteur $\lb - \rb : \Mod'(\chi) \to \gr{Set}$ est défini par
+\begin{align*}
+& \lb M \rb_\chi = \{ M' \in \Mod(\Sigma') \mid \Mod(\chi)(M') = M \}
+\end{align*}
+De plus, pour tout morphisme de signatures $(\ph,\ph' : \chi \to \chi_1)$, la transformation naturelle $\lb - \rb_{(\ph,\ph')}$ est définie pour tout $M' \in \lb M \rb_{\chi_1}$ par
+\[ \lb M \rb_{(\ph,\ph')}(M') = \Mod(\ph')(M') \]
+\itemz Soit $\chi : \Sigma \to \Sigma'$. On définit pour tous $\ph \in \Sen'(\chi)$, $M' \in \lb M \rb_\chi$
+\begin{align*}
+M \models_\chi^{M'} \ph \text{ ssi } M' \models_{\Sigma'} \ph
+\end{align*}
 \end{itemize}
 \newpage
 \section{Opérateurs duaux}
@@ -713,6 +727,7 @@ On note $\M = \prod_{i\in I} \M_i$ et $\M^* = \M / \U$. La preuve est par récur
 \end{itemize}
 \cqfd
 \newpage
+
 \tableofcontents
 
 \end{document}
