@@ -3,4 +3,7 @@
 *.pdf
 *.synctex.gz
 *.toc
+*.bbl
+*.blg
+*.dvi
 Homework.tex
