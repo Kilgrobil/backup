@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper]{geometry}
+
+\usepackage{amsthm}
+\newtheorem{theo}{Théorème}
+\newtheorem{defi}[theo]{Définition}
+\newtheorem{prop}[theo]{Proposition}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{stmaryrd}
+\usepackage{proof}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usetikzlibrary{decorations.pathmorphing}
+
+\setlength\parindent{0pt}
+
+\newcommand{\La}{\mathcal{L}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\ph}{\varphi}
+\newcommand{\itemz}{\item[$\triangleright$]}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\gr}{\textbf}
+\newcommand{\il}{\textit}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\preuve}{\begin{proof}[Preuve]}
+\newcommand{\cqfd}{\end{proof}}
+\newcommand{\equi}{\Leftrightarrow}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\I}{\mathcal{I}}
+\renewcommand{\iff}{\Leftrightarrow}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\lb}{\llbracket}
+\newcommand{\rb}{\rrbracket}
+\newcommand{\info}[1]{\text{{\fontfamily{lmss}\selectfont #1}}}
+\newcommand{\Mod}{\info{Mod}}
+\newcommand{\Sen}{\info{Sen}}
+\newcommand{\1}{\mathbbm{1}}
+\renewcommand{\contentsname}{Table des matières}
+\renewcommand{\proofname}{Preuve}
+
+
+\usepackage[bitstream-charter]{mathdesign}
+%\usepackage[charter]{mathdesign}
+%\usepackage{fontspec}
+%\setmainfont{URW Palladio L}
+\renewcommand\bibname{Bibliographie}
+
+
+
+\begin{document}
+
+Ce projet de recherche de troisième année à CentraleSupélec cherche à rendre compte du lien qui est en train d'être établi entre morphologie mathématique et théorie des institutions stratifiées.\\\\
+La \gr{morphologie mathématique} est une discipline issue historiquement du traitement des images. Elle a été introduite par G. Matheron et J. Serra en 1964. Il s'agit d'une théorie d'analyse de structures munie d'aspects algébriques et topologiques importants. Elle manipule des objets concrets et a de nombreux champs d'application telles que l'imagerie médicale ou la géologie.\\\\
+La \gr{théorie des institutions} est une formalisation de la logique proposée en 1992 par J. Goguen et R. Burstall \cite{Gog92}. Cette théorie a été étudiée systématiquement par R. Diaconescu \cite{Dia08}, et enrichie en 2007 par R. Diaconescu et M. Aiguier en la théorie des institutions \gr{stratifiées} \cite{Aig07} qui permet une plus grande expressivité.\\\\
+Récemment, I. Bloch et M. Aiguier ont remarqué qu'un lien était à établir entre ces deux théories.
+
+
+\newpage
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{biblireport}
+
+\end{document}
