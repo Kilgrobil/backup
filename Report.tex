@@ -67,9 +67,9 @@
 \chapter*{Introduction}
 Ce projet de recherche de troisième année à CentraleSupélec cherche à rendre compte du lien qui est en train d'être établi entre morphologie mathématique et théorie des institutions stratifiées.\\\\
 La \gr{morphologie mathématique} est une discipline issue historiquement du traitement des images. Elle a été introduite par Matheron et Serra en 1964. Il s'agit d'une théorie d'analyse de structures basée sur les concepts duaux d'érosion et de dilatation, à forte connotation topologique et algébrique. Elle manipule des objets concrets et a de nombreux champs d'application telles que l'imagerie médicale ou la géologie (voir \cite{Lan93} pour un bref aperçu des applications géologiques en lien avec les probabilités). Pour une introduction, on se référera par exemple à \cite{Blo07} ou au cours de Manzanera à CentraleSupélec \cite{Man18}.\\\\
-La \gr{théorie des institutions} est une formalisation de la logique proposée en 1992 par Goguen et Burstall \cite{Gog92}. Cette théorie a été étudiée systématiquement par Diaconescu \cite{Dia08}, et enrichie en 2007 par Diaconescu et Aiguier en la théorie des institutions \gr{stratifiées} \cite{Aig07} qui permet une plus grande expressivité grâce à la prise en compte de la notion d'état. Cette théorie est très générale mais aussi très abstraite, voire trop abstraite pour être applicable.\\\\
-Récemment, Bloch et Aiguier ont remarqué qu'un lien était à établir entre ces deux théories \cite{Aig17}. Il semble possible de tirer parti du très haut degré de généralité du formalisme des institutions, ainsi que du point de vue concret de la morphologie mathématique. La combinaison de ces deux visions permettrait d'obtenir une théorie à la fois puissante et applicable.\\\\
-Détaillons un peu ce compromis abstrait/concret permis par l'hybridation des deux théories. Les systèmes logiques usuels, tels que la logique du premier ordre, reposent sur des modèles concrets (par exemple $\mathbb{N},\mathbb{Z},\mathbb{R}$...) et des formules concrètes (par exemple $\forall x \forall y \exists z, x = y + z$). En théorie des institutions, tous ces objets sont abstraits via le formalisme de la théorie des catégories : un modèle n'est plus qu'un objet de la catégorie des modèles, une formule n'est plus qu'un objet de la catégorie des formules. Cependant, bien qu'il s'avère souvent utile d'avoir peu de contraintes sur les modèles, cela ne semble pas nécessaire pour les formules. En effet, en pratique, les formules d'un système logique sont toujours construites par induction à partir de connecteurs et de formules de base dites "atomiques". La théorie naissante prend cet aspect en compte en choisissant de considérer des modèles abstraits mais des formules définies par induction ; nous l'appellerons désormais "théorie hybride". Ces formules ont quand même leur dose d'abstraction : elles sont définies par induction à partir de connecteurs sur lesquels rien, ou presque, n'est imposé.
+La \gr{théorie des institutions} est une formalisation abstraite de la logique mathématique (sous ses aspects sémantiques) proposée en 1992 par Goguen et Burstall \cite{Gog92}. La généralisation de résultats de la théorie des modèles au sein des institutions été étudiée systématiquement par Diaconescu \cite{Dia08}. En 2007, Diaconescu et Aiguier l'ont enrichie en créant la théorie des institutions \gr{stratifiées} \cite{Aig07} qui permet une meilleure prise en compte de certaines logiques très utiles en informatique, telles que les logiques modales, et ce grâce à la prise en compte de la notion d'état. Ces théories sont très générales mais aussi très abstraites, voire trop abstraites pour toujours bien prendre en compte certains aspects d'un formalisme logique, tels que la définition inductive des formules logiques.\\\\
+Récemment, Bloch et Aiguier ont remarqué qu'un lien pouvait être établi entre la morphologie mathématique et les institutions stratifiées \cite{Aig17}. Il semble possible de tirer parti du très haut degré de généralité du formalisme des institutions, ainsi que du point de vue concret de la morphologie mathématique. La combinaison de ces deux visions permettrait d'obtenir une théorie à la fois puissante et applicable à une large famille de formalismes.\\\\
+Détaillons un peu ce compromis abstrait/concret permis par l'hybridation des deux théories. Les systèmes logiques usuels, tels que la logique du premier ordre, reposent sur des modèles concrets (par exemple $\mathbb{N},\mathbb{Z},\mathbb{R}$ munis de leurs opérations standard $+,\times$...) et des formules concrètes (par exemple $\forall x \forall y \exists z, x = y + z$). En théorie des institutions, tous ces objets sont abstraits via le formalisme de la théorie des catégories : un modèle n'est plus qu'un objet de la catégorie des modèles, une formule n'est plus qu'un objet de la catégorie des formules. Cependant, bien qu'il s'avère souvent utile d'avoir peu de contraintes sur les modèles, cela ne semble pas toujours adapté pour les formules. En effet, en pratique, les formules d'un système logique sont toujours construites par induction à partir de connecteurs et de formules de base dites "atomiques". L'extension des institutions stratifiées dans \cite{Aig17} prend cet aspect en compte en choisissant de considérer des modèles abstraits mais des formules définies par induction ; nous l'appellerons désormais "théorie hybride". Ces formules ont quand même leur dose d'abstraction : elles sont définies par induction à partir de connecteurs sur lesquels rien, ou presque, n'est imposé.
 
 \begin{center}
 \begin{tabular}{|l|c|c|}
@@ -84,12 +84,13 @@ Détaillons un peu ce compromis abstrait/concret permis par l'hybridation des de
   \hline
 \end{tabular}
 \end{center}
-
-Une fois la théorie hybride bien définie, ce qui a été amorcé dans \cite{Aig17}, la première question se pose : peut-on retrouver des résultats logiques bien connus dans ce nouveau cadre ? Un des premiers énoncés phares à regarder est le théorème de \L o\'s. Il s'agit d'un énoncé extrêmement classique en logique du premier ordre et qui est au coeur de la preuve du théorème de compacité. Nous en donnerons une démonstration inspirée de celle du cours de Patrick Simonetta à l'Université Paris-Diderot (voir aussi \cite{Cor03}). L'objectif annoncé du projet de recherche est de réussir à produire l'analogue de ce résultat dans le cadre de la théorie hybride. Pour cela, il va falloir en particulier fournir une définition de ce qu'est un ultraproduit, puis essayer d'adapter la preuve originale.\\\\
+Dans ce tableau, $(E_i)_{i\in I}$ et $(D_i)_{i\in I}$ sont des connecteurs abstraits définis à partir des notions d'érosion et de dilatation de la morphologie mathématique.\\\\
+Une fois la théorie hybride bien définie, ce qui a été amorcé dans \cite{Aig17}, une question se pose : peut-on retrouver des résultats logiques bien connus dans ce nouveau cadre ? Un des premiers énoncés phares que nous proposons de regarder est le théorème de \L o\'s. Il s'agit d'un énoncé extrêmement classique en logique du premier ordre et qui est au coeur de la preuve du théorème de compacité. Nous en donnerons une démonstration inspirée de celle du cours de Simonetta à l'Université Paris-Diderot (voir aussi \cite{Cor03}). Dans notre contexte, l'intérêt de ce résultat est que sa preuve classique repose fortement sur la définition inductive des formules. L'objectif annoncé du projet de recherche est de réussir à produire l'analogue de ce résultat dans le cadre de la théorie hybride, ce qui revient ainsi à obtenir le théorème de \L o\'s indépendamment d'un formalisme logique donné. Pour cela, il va falloir en particulier fournir une définition de ce qu'est un ultraproduit, puis essayer de généraliser la preuve originale.\\\\
 Ce travail a déjà été réalisé en partie par Diaconescu lorsque les formules sont totalements abstraites (voir \cite{Dia08} pour les institutions et \cite{Dia16} pour les institutions stratifiées). L'intérêt ici est de voir à quel point donner une structure inductive aux formules permet de simplifier ces travaux, assez techniques de par la lourde machinerie catégorielle mise en \oe uvre.
 
 \newpage
 \chapter{Introduction à la morphologie mathématique}
+On donne ici une définition ensembliste basique de la morphologie mathématique. La définition plus générale est à base de treillis, i.e., d'ensemble ordonné dont chaque paire d'éléments admet une borne inférieure et une borne supérieure. Ici, le treillis est celui de l'ensemble des parties ordonné par inclusion, avec $\sup(A,B) = A \cup B$ et $\inf(A,B) = A \cap B$.\\\\
 On se place dans l'espace vectoriel $E = \mathbb{R}^n$. Soit $A,B \subseteq E$. Le symétrique et le complémentaire d'une partie de $E$ sont définis par
 \begin{align*} & \check{A} = \{ -a \mid a \in A \} 
 & \overline{A} = \{ a \in E \mid a \notin A \} \end{align*}
@@ -136,7 +137,7 @@ Le comportement de ces diverses opérations peut être décrit par plusieurs pro
 \caption*{La croix est ouverte (en haut) ou fermée (en bas) par rapport au même élément structurant triangulaire. (Figure issue de \cite{Blo07})}
 \end{center}
 \end{figure}
-Ici, les opérateurs $E$ et $D$ agissent sur des ensembles. Dans la suite, l'idée va être de chercher à définir des opérateurs $E$ et $D$ qui agissent sur des formules logiques. Comme mentionné dans l'introduction, ces opérateurs seront abstraits ; en particulier, ils ne vont pas forcément être définis à partir d'un élément structurant. Le point de vue adopté sera plus algébrique, dans le sens où on va seulement imposer à $E$ et $D$ de vérifier certaines des propriétés ci-dessus : extensivité, anti-extensivité, croissance... Voici, informellement, la définition qui sera adoptée pour les formules logiques. Tout n'y est pas encore parfaitement défini.
+Ici, les opérateurs $E$ et $D$ agissent sur des ensembles. Dans la suite, l'idée va être de chercher à définir des opérateurs $E$ et $D$ qui agissent sur des formules logiques. Comme mentionné dans l'introduction, ces opérateurs seront abstraits ; en particulier, ils ne vont pas forcément être définis à partir d'un élément structurant. Le point de vue adopté sera plus algébrique, dans le sens où on va seulement imposer à $E$ et $D$ de vérifier certaines des propriétés ci-dessus : extensivité, anti-extensivité, croissance... Voici, informellement, la définition qui sera adoptée pour les formules logiques.
 \begin{defi}
 Soit $\F$ un ensemble de formules logiques et $E,D : \F \to \F$ des opérateurs tels que pour toute formule $\ph \in \F$, 
 \[ E(\ph) \Leftrightarrow \neg D ( \neg \ph) \]
@@ -145,6 +146,7 @@ On dit que $E$ et $D$ sont une érosion et une dilatation algébrique si pour to
 & D(\ph \vee \psi) \Leftrightarrow D(\ph) \vee D(\psi) & E(\ph \wedge \psi) \Leftrightarrow E(\ph) \wedge E(\psi)
 \end{align*}
 \end{defi}
+ Tout n'y est pas encore parfaitement défini. Par exemple, $\F$ doit être muni d'une structure de treillis, afin de disposer des opérateurs $\wedge$ et $\vee$.
 
 \chapter{Introduction à la théorie des institutions}
 
@@ -269,7 +271,7 @@ La théorie des institutions vient de l'observation que les différentes logique
 \item[(i)] On définit ce qu'est une formule.
 \item[(ii)] On définit des règles qui permettent déduire les formules les unes des autres. Par exemple, la règle du modus ponens en logique classique :
 $$\infer{Q}{P & P \Rightarrow Q}$$
-Parmi ces règles, certaines sont de la forme $ \infer{P}{}$ ce qui signifie que la formule $P$ est un axiome : elle est admise sans démonstration.
+Parmi ces règles, certaines sont de la forme $ \frac{}{P}$ ce qui signifie que la formule $P$ est un axiome : elle est admise sans démonstration.
 \end{itemize}
 Une démonstration de $P$ consiste alors en un arbre de preuve représentant l'application successive des règles jusqu'à obtenir $P$. Par exemple, si on se donne comme règle le modus ponens et comme axiomes $P$ et $P \Rightarrow Q$, l'arbre suivant est une démonstration de $Q$ :
 $$ \infer{Q}{\infer{P}{} & \infer{P\Rightarrow Q}{}} $$
@@ -539,7 +541,7 @@ On peut définir à partir des institutions stratifiées des notions générales
 \item $\psi$ est une négation de $\ph$ si $\lb \psi \rb = \lb \top \rb \setminus \lb \ph \rb$.
 \item $\psi$ est une conjonction de $\ph_1$ et $\ph_2$ si $\lb \psi \rb = \lb \ph_1 \rb \cap \lb \ph_2 \rb$.
 \item $\psi$ est une disjonction de $\ph_1$ et $\ph_2$ si $\lb \psi \rb = \lb \ph_1 \rb \cup \lb \ph_2 \rb$.
-\item $\psi$ est une implication de $\ph_1$ et $\ph_2$ si $\lb \psi \rb = (\lb \top \rb \setminus \lb \ph_1 \rb) \cap \lb \ph_2 \rb$.
+\item $\psi$ est une implication de $\ph_1$ et $\ph_2$ si $\lb \psi \rb = (\lb \top \rb \setminus \lb \ph_1 \rb) \cup \lb \ph_2 \rb$.
 \item $\psi$ et $\ph$ sont équivalentes, noté $\psi \equiv \ph$, si $\lb \psi \rb = \lb \ph \rb$.
 \end{itemize}
 On dira que l'institution $\I$ a la négation (resp. conjonction, disjonction, implication) lorsque pour tout $\Sigma \in \gr{Sig}$ et tout $\Sigma$-modèle, toute $\Sigma$-formule a une négation (resp. conjonction, disjonction, implication).
@@ -674,7 +676,7 @@ M \models_\chi^{M'} \ph \text{ ssi } M' \models_{\Sigma'} \ph
 
 
 \chapter{Le théorème de \L o\'s en logique du premier ordre}
-Soit $\La$ un langage du premier ordre de signature $(\C,(\F_n)_{n\in \N^*}, (\R_n)_{n\in \N^*})$, $I$ un ensemble non vide, et $(\M_i)_{i\in I}$ une famille de $\La$-structures indexées par $I$. Pour $a \in \prod_{i\in I} M_i$, on note $a(i)$ sa $i$-ème coordonnée. Pour toute $\La$-formule $\ph = \ph(x_1...x_n)$ (i.e. à variables parmi $x_1...x_n$) et tout $(a_1...a_n) \in \prod_{i\in I} M_i$, on note 
+Soit $\La$ un langage du premier ordre de signature $(\C,(\F_n)_{n\in \N^*}, (\R_n)_{n\in \N^*})$, $I$ un ensemble non vide, et $(\M_i)_{i\in I}$ une famille de $\La$-structures indexées par $I$. Pour $a \in \prod_{i\in I} M_i$, on note $a(i)$ sa $i$-ème coordonnée. Pour toute $\La$-formule $\ph = \ph(x_1...x_n)$ (i.e. à variables parmi $x_1...x_n$) et tout $\bar{a} = (a_1...a_n) \in \left(\prod_{i\in I} M_i\right)^n$, on note 
 \[ ||\ph(\bar{a})|| = \{ i \in I \mid \M_i \models \ph(\bar{a}(i))\} \]
 où $\bar{a}(i) = a_1(i)...a_n(i)$. On a les propriétés :
 \begin{itemize}
@@ -686,12 +688,12 @@ où $\bar{a}(i) = a_1(i)...a_n(i)$. On a les propriétés :
 Le produit cartésien des $(\M_i)_{i\in I}$ est muni de la $\La$-structure suivante, notée $\M = \prod_{i\in I} \M_i$. Pour $c \in \C$, $c^\M = (c^{\M_i})_{i\in I}$. Pour $f \in \F_n$, $f^\M(a_1...a_n) = (f^{\M_i}(a_1(i)...a_n(i)))_{i\in I}$. Pour $R \in \R_n$, $R^\M = \{(a_1...a_n) \in (\prod_{i\in I} M_i)^n \mid \forall i \in I, (a_1(i)...a_n(i)) \in R^{\M_i}\}$. On a alors pour tout $\La$-terme $t = t(x_1...x_n)$ que $t^\M (a_1...a_n) = (t^{\M_i}(a_1(i)...a_n(i)))_{i\in I}$.
 \section{Filtres et ultrafiltres}
 \begin{defi}
-Un filtre sur $I$ est une partie $\F \subseteq P(I)$ qui vérifie
+Un filtre sur $I$ est une partie $\F \subseteq \mathcal{P}(I)$ qui vérifie
 \begin{enumerate}
 \setlength\itemsep{-0.3em}
 \item[(i)] $I \in \F$, $\emptyset \notin \F$.
 \item[(ii)] Si $X,Y \in \F$ alors $X \cap Y \in \F$ (stabilité par intersections finies).
-\item[(iii)] Si $X \subseteq Y$ et $X \in \F$ alors $Y \in \F$.
+\item[(iii)] Si $X \subseteq Y \subseteq I$ et $X \in \F$ alors $Y \in \F$.
 \end{enumerate}
 \end{defi}
 
@@ -699,7 +701,7 @@ Un filtre sur $I$ est une partie $\F \subseteq P(I)$ qui vérifie
 \begin{itemize}
 \itemz Le filtre trivial est $\F = \{ I \}$.
 \itemz Le filtre engendré par $J\subseteq I$ (on dit que c'est un filtre principal) est défini par $\F_J = \{ X \in P(I) \mid J \subseteq X \}$. Si $I$ est fini, tous les filtres sont principaux (prendre un $X \in \F$ de cardinalité minimale).
-\itemz Un ensemble $B \subseteq P(I)$ est une \il{base de filtre} s'il a la propriété de l'intersection finie i.e. pour tous $X_1...X_n \in B, X_1 \cap ... \cap X_n \neq \emptyset$. Dans ce cas, on pose $\F_B = \{ X \in P(I) \mid \exists n \in \N^* , \exists X_1...X_n, X_1 \cap ... \cap X_n \subseteq X \}$, qui est le plus petit filtre contenant $B$. On l'appelle le filtre engendré par $B$.
+\itemz Un ensemble $B \subseteq P(I)$ est une \il{base de filtre} s'il a la propriété de l'intersection finie i.e. pour tous $X_1...X_n \in B, X_1 \cap ... \cap X_n \neq \emptyset$. Dans ce cas, on pose $\F_B = \{ X \in P(I) \mid \exists n \in \N^* , \exists X_1...X_n \in B, X_1 \cap ... \cap X_n \subseteq X \}$, qui est le plus petit filtre contenant $B$. On l'appelle le filtre engendré par $B$.
 \itemz Si $I$ est infini, on définit le filtre de Fréchet par $\F_\text{Fréchet} = \{ X \in P(I) \mid I\setminus X \text{ est fini}\}$. C'est un filtre qui est non principal. En effet, si $J \in \F_\text{Fréchet}$, soit $i_0 \in J$. Alors $I \setminus (J \setminus \{i_0\})$ est fini donc $J \setminus \{i_0\} \in \F_\text{Fréchet}$ d'où $\F_\text{Fréchet} \neq \F_J$.
 \end{itemize}
 Un \il{ultrafiltre} est un filtre maximal pour l'inclusion. Tout filtre $\F_0$ est contenu dans un ultrafiltre, par le lemme de Zorn (l'ensemble des filtres sur $I$ contenant $\F_0$ est inductif).
