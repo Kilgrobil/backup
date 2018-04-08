@@ -7,3 +7,7 @@
 *.blg
 *.dvi
 Homework.tex
+*.nav
+*.out
+*.snm
+*.vrb

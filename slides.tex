@@ -11,7 +11,9 @@
 \newcommand{\Mod}{\info{Mod}}
 \newcommand{\Sen}{\info{Sen}}
 \newcommand{\itemz}{\item[$\triangleright$]}
-\usepackage{stmaryrd} 
+\newcommand{\il}{\textit}
+\usepackage{stmaryrd}
+\usepackage{tikz-cd} 
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 
@@ -42,7 +44,7 @@ La logique est la base de l'informatique.
 \itemz La programmation est une activité logique : concevoir un programme, c'est prouver une proposition de façon constructive.
 \end{itemize}
 \pause
-Pour résoudre un problème d'informatique, les chercheurs et ingénieurs utilisent une logique existante ou définissent une nouvelle logique dédiée à ce problème. \pause 
+Problème d'informatique $\rightsquigarrow$ utilisation d'une logique existante ou définition d'une nouvelle logique dédiée à ce problème. \pause 
 \begin{itemize}
 \itemz \'Electronique : logique propositionnelle
 \itemz Programmes standards : logique du premier ordre
@@ -56,11 +58,11 @@ Pour résoudre un problème d'informatique, les chercheurs et ingénieurs utilis
 \frametitle{Plan de l'exposé}
 \begin{itemize}
 \itemz Présentation de trois logiques usuelles
-\itemz Présentation de l'abstraction de ce qu'est une logique : les institutions
+\itemz Présentation de l'abstraction de ce qu'est une logique : les institutions \cite{Dia08}
 \itemz Les problèmes des institutions ont mené à deux développements
 \begin{itemize}
-\itemz Les institutions stratifiées (prise en compte de la notion d'état)
-\itemz La morpho-logique (prise en compte de la structure des formules logiques)
+\itemz Les institutions stratifiées (prise en compte de la notion d'état) \cite{Aig07}
+\itemz La morpho-logique (prise en compte de la structure des formules logiques) \cite{Aig17}
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -120,7 +122,14 @@ Valuation $v : \mathcal{P} \to \{0,1\}$ + Tables de vérité
 \frametitle{Logique propositionnelle}
 \textbf{Exemple.}\\
 Un vol a été commis.\\
-S'il a vérifié l'homogénéité de son butin, alors le voleur est un physicien. Si c'était un mathématicien, alors il n'a pas divisé par zéro. Quoi qu'il en soit, le voleur était un mathématicien ou un physicien.
+S'il a vérifié l'homogénéité de son butin, alors le voleur est un physicien. Si c'était un mathématicien, alors il n'a pas divisé par zéro. Quoi qu'il en soit, le voleur était un mathématicien ou un physicien. \pause
+\begin{align*}
+& p = \text{ "le voleur est un physicien" } \\
+& m = \text{ "le voleur est un mathématicien" } \\
+& h = \text{ "le voleur a vérifié l'homogénéité" } \\
+& z = \text{ "le voleur a divisé par zéro" }
+\end{align*}
+\pause
 \[ (h \Rightarrow p) \wedge (m \Rightarrow \neg z) \wedge (m \vee p) \]
 \end{frame}
 
@@ -215,7 +224,7 @@ Toutes ces logiques (et les autres ont la même structure) :
 
 \subsection{Institutions (stratifiées)}
 
-\begin{frame}
+\begin{frame}[fragile]
 \begin{definition}[Catégorie]
 Une catégorie $\textbf{C}$ est composée
 \begin{itemize}
@@ -225,12 +234,17 @@ Une catégorie $\textbf{C}$ est composée
 \itemz Pour chaque objet $A$, d'un élément neutre $id_A : A \to A$.
 \end{itemize}
 \end{definition} \pause 
-Dessin \\
+\begin{center}
+\begin{tikzcd}
+\cdot & \cdot \arrow[r] & \cdot \arrow[d] \\
+\cdot \arrow[u] \arrow[ur] & \cdot \arrow[l] \arrow[u] & \cdot \arrow[ul]
+\end{tikzcd}
+\end{center}
 \pause
 \gr{Exemples.} La catégorie des ensembles $\textbf{Set}$.\\ La catégorie des catégories $\textbf{Cat}$. 
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 \begin{definition}[Foncteur]
 Soit $\gr{C}$, $\gr{D}$ deux catégories. Un foncteur $F : \gr{C} \to \gr{D}$ associe 
 \begin{itemize}
@@ -239,6 +253,27 @@ Soit $\gr{C}$, $\gr{D}$ deux catégories. Un foncteur $F : \gr{C} \to \gr{D}$ as
 \end{itemize}
 De plus, $F(g \circ f) = F(g) \circ F(f)$ ($F$ est covariant) ou $F(g \circ f) = F(f) \circ F(g)$ ($F$ est contravariant). 
 \end{definition}
+\pause
+\begin{center}
+\begin{tikzpicture}[baseline= (a).base]
+\node[scale=0.7] (a) at (0,0){
+
+\begin{tikzcd}
+\cdot \arrow[ddrr,""{name=1}] \arrow[dd,""{name=2}] \arrow[drrrr,dashed] & & \textbf{C} & & & &  \\
+& & & & |[alias=U]| \cdot \arrow[ddrr,""{name=1'}] \arrow[dd,""{name=2'}] & & \textbf{D} \\
+\cdot \arrow[rr,""{name=3}] \arrow[drrrr,dashed] & & \cdot \arrow[drrrr,dashed] & & & & \\
+& & & & |[alias=D]| \cdot \arrow[rr,""{name=3'}] & & |[alias=R]| \cdot 
+
+\arrow[from=1, to=1', dotted]
+\arrow[from=3, to=3', dotted]
+\arrow[from=U, to=D, crossing over]
+\arrow[from=2, to=2', dotted]
+
+\end{tikzcd}
+};
+\end{tikzpicture}
+\end{center}
+
 \end{frame}
 
 \begin{frame}
@@ -260,9 +295,9 @@ Comment prendre en compte la notion d'état ? \pause
 \begin{definition}[Stratification]
 Une institution \textit{stratifiée} est une institution munie d'une stratification, i.e., d'une famille de foncteurs $\llbracket - \rrbracket_\Sigma : \Mod(\Sigma) \to \gr{Set}$.
 \end{definition}
-$\llbracket M \rrbracket_\Sigma$ est l'ensemble des états de $M$.
+$\llbracket M \rrbracket_\Sigma$ est l'ensemble des états de $M$. \\
 \pause
-La relation de satisfaction $\models_\Sigma$ va alors être paramétrée par les états : pour chaque état $\eta \in \llbracket M \rrbracket_\Sigma$, il y a une relation de satisfaction $\models_\Sigma^\eta$.\\
+La relation de satisfaction $\models_\Sigma$ est paramétrée par les états : $\models_\Sigma^\eta$.\\
 $\longrightarrow$ Une formule peut être vraie ou fausse en fonction de l'état du système. \\~\\
 On peut définir, par exemple, des topologies sur les ensembles d'états (cf logique $\textbf{TMPL}$ dans le rapport).
 \end{frame}
@@ -271,7 +306,7 @@ On peut définir, par exemple, des topologies sur les ensembles d'états (cf log
 
 \subsection{Motivation}
 \begin{frame}
-\gr{Problème} : $\Sen : \gr{Sig} \to \gr{Set}$), mais en pratique les formules sont toujours définies par induction.\\~\\ \pause
+\gr{Problème} : $\Sen : \gr{Sig} \to \gr{Set}$, mais en pratique les formules sont toujours définies par induction.\\~\\ \pause
 Comment définir nos formules par induction, mais en les laissant abstraites ? \pause \\~\\
 Logique du premier ordre = logique propositionnelle + $\forall$ + $\exists$\\
 Logique modale = logique propositionnelle + $\square$ + $\Diamond$\\ \pause
@@ -286,24 +321,78 @@ $\square$ et $\Diamond$ vérifient les mêmes propriétés de dualité
 \subsection{Morphologie mathématique}
 
 \begin{frame}
-Jolies images
+Addition de Minkowski dans $\mathbb{R}^n$ et dilatation :
+\begin{align*} & A \oplus B = \{ a + b \mid a \in A, b \in B \} &
+ & D : X \mapsto X \oplus B
+\end{align*}
+\pause
+Soustraction de Minkowski dans $\mathbb{R}^n$ et érosion : 
+\begin{align*} & A \ominus B = \{ a \mid \forall b \in B , a + b \in A \}   & & E : X \mapsto X \ominus B
+\end{align*}
+\pause
+\begin{center}
+\includegraphics[scale=0.3]{erodil.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+Propriétés de dualité :
+\begin{align*}
+& ~^{c} E(X) = D(~^{c} X) \\
+& E(X \cap Y) = E(X) \cap E(Y) \\
+& D(X \cup Y) = D(X) \cup D(Y)
+\end{align*} \pause
+\begin{align*}
+& \neg \forall x, \varphi \leftrightarrow \exists x, \neg \varphi \\
+& \forall x, (\varphi \wedge \psi) \leftrightarrow (\forall x, \varphi) \wedge (\forall x, \psi) \\
+& \exists x, (\varphi \vee \psi) \leftrightarrow (\exists x, \varphi) \vee (\exists x, \psi)
+\end{align*} 
+\textbf{Idée :} Prendre une classe d'opérateurs duaux abstraits $(E_i)_{i\in I}$ et $(D_i)_{i\in I}$ afin de modéliser n'importe quels nouveaux opérateurs logiques duaux tels que $\forall, \exists$ ou $\square, \Diamond$.
 \end{frame}
 
 \subsection{Morpho-logique}
 
 \begin{frame}
-L'abstraction est sur les connecteurs. \\
-Objectif : retrouver des théorèmes connus plus facilement (pouvoir les donner direct dans la cas de n'importe quelle logique définie par induction). \\
-Cas typique : le théorème de Los. On peut le prouver avec une extrême lourdeur dans les institutions en général, mais sa preuve classique est par essence une induction sur les formules. C'est un bon crash-test pour notre théorie.
+\begin{center}
+\begin{tabular}{|l|c|c|}
+  \hline
+   & \gr{Formules} \\
+  \hline
+  \il{Institutions} & Abstraites \\
+  \hline
+  \il{Morpho-logique} & $\neg,\wedge,\vee,\Rightarrow,(E_i)_{i\in I},(D_i)_{i\in I}$ \\
+  \hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}
+Exemple : le théorème de \L o\'s. \\
+On peut le prouver avec une extrême lourdeur dans les institutions en général, mais sa preuve classique est par essence une induction sur les formules. C'est un bon crash-test pour notre théorie.
+\begin{theorem}[\L o\'s]
+Soit $I$ un ensemble et $\mathcal{U}$ un ultrafiltre sur $I$. Alors pour toute formule $\varphi = \varphi(x_1,...,x_n)$, pour tous $a_1,...,a_n \in \prod_{i\in I} M_i$, on a l'équivalence
+\begin{align*}
+ \prod_{i\in I} \mathcal{M}_i / \mathcal{U} \models \varphi(\pi(a_1),...,\pi(a_n)) \Longleftrightarrow ||\varphi(a_1,...,a_n)|| \in \mathcal{U}
+\end{align*}
+\end{theorem}
 \end{frame}
 
 \begin{frame}
 \frametitle{References}
 \footnotesize{
-\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
-\bibitem[Smith, 2012]{p1} John Smith (2012)
-\newblock Title of the publication
-\newblock \emph{Journal Name} 12(3), 45 -- 678.
+\begin{thebibliography}{99}
+\bibitem[Aig17]{Aig17} Marc Aiguier, Isabelle Bloch (2017)
+\newblock Dual Logic Concepts based on Mathematical Morphology in Stratified Institutions: Applications to Spatial Reasoning
+\newblock \emph{CoRR} abs/1710.05661.
+
+\bibitem[Aig07]{Aig07} Marc Aiguier, Răzvan Diaconescu (2007)
+\newblock Stratified institutions and elementary homomorphisms
+\newblock \emph{Information Processing Letters} 103(1), 5 --13.
+
+\bibitem[Dia08]{Dia08} Răzvan Diaconescu (2008)
+\newblock Institution-independent Model Theory
+\newblock Birkhäuser Basel, 1st edition.
+
 \end{thebibliography}
 }
 \end{frame}
