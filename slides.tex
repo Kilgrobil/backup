@@ -21,7 +21,7 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Morpho-logique]{Ultraproduits et généralisation du théorème de \L o\'s dans les institutions stratifiées}
+\title[Morpho-logique]{Institutions stratifiées : vers une généralisation du théorème de \L o\'s}
 \author{Alexandre Goy}
 \institute[Parcours MP]
 {
@@ -40,17 +40,17 @@ CentraleSupélec, Parcours Maths-Physique
 \begin{frame}
 La logique est la base de l'informatique.
 \begin{itemize}
-\itemz Elle en est la base théorique : calculabilité, indécidabilité, classification des problèmes selon leur complexité.
+\itemz Base théorique : calculabilité, indécidabilité, classification des problèmes selon leur complexité...
 \itemz La programmation est une activité logique : concevoir un programme, c'est prouver une proposition de façon constructive.
 \end{itemize}
-\pause
-Problème d'informatique $\rightsquigarrow$ utilisation d'une logique existante ou définition d'une nouvelle logique dédiée à ce problème. \pause 
+\pause ~\\
 \begin{itemize}
 \itemz \'Electronique : logique propositionnelle
 \itemz Programmes standards : logique du premier ordre
 \itemz Systèmes réactifs : logique modale temporelle
 \end{itemize} \pause 
-\textbf{Conséquence :} Il existe un très grand nombre de logiques.
+\textbf{Conséquence :} Il existe un très grand nombre de logiques.\pause \\
+... Mais on commence toujours par y prouver les mêmes résultats fondamentaux.
 
 \end{frame}
 
@@ -59,11 +59,6 @@ Problème d'informatique $\rightsquigarrow$ utilisation d'une logique existante 
 \begin{itemize}
 \itemz Présentation de trois logiques usuelles
 \itemz Présentation de l'abstraction de ce qu'est une logique : les institutions \cite{Dia08}
-\itemz Les problèmes des institutions ont mené à deux développements
-\begin{itemize}
-\itemz Les institutions stratifiées (prise en compte de la notion d'état) \cite{Aig07}
-\itemz La morpho-logique (prise en compte de la structure des formules logiques) \cite{Aig17}
-\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -220,6 +215,8 @@ Toutes ces logiques (et les autres ont la même structure) :
   \hline
 \end{tabular}
 \end{center}
+\pause
+Généralisation : théorie des catégories
 \end{frame}
 
 \subsection{Institutions (stratifiées)}
@@ -287,11 +284,23 @@ Une institution $\mathcal{I}$ est composée de
 \itemz Satisfaction : pour toute signature $\Sigma \in \textbf{Sig}$, une relation $\models_\Sigma$ entre $\Mod(\Sigma)$ et $\Sen(\Sigma)$.
 \end{itemize}
 \end{definition}
-
+Avec la relation de satisfaction pour tout $\sigma : \Sigma \to \Sigma'$, $M' \in \Mod(\Sigma')$, $\varphi \in \Sen(\Sigma)$:
+\[ M' \models_{\Sigma'} \Sen(\sigma)(\varphi) \Leftrightarrow \Mod(\sigma)(M') \models_\Sigma \varphi \]
 \end{frame}
 
+
 \begin{frame}
-Comment prendre en compte la notion d'état ? \pause
+
+Les problèmes des institutions ont mené à deux développements
+\begin{itemize}
+\itemz Les institutions stratifiées (prise en compte de la notion d'état) \cite{Aig07}
+\itemz La morpho-logique (prise en compte de la structure des formules logiques) \cite{Aig17}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\textbf{Problème :} Comment prendre en compte la notion d'état ? \pause
 \begin{definition}[Stratification]
 Une institution \textit{stratifiée} est une institution munie d'une stratification, i.e., d'une famille de foncteurs $\llbracket - \rrbracket_\Sigma : \Mod(\Sigma) \to \gr{Set}$.
 \end{definition}
@@ -364,17 +373,25 @@ Propriétés de dualité :
   \hline
 \end{tabular}
 \end{center}
+\pause
+Avantage : résultats classiques en morphologie mathématique \\ 
+\begin{itemize}
+\itemz Extensivité : $X \subseteq D(X)$
+\itemz Antiextensivité : $E(X) \subseteq X$
+\itemz Adjonction : $X \subseteq E(Y) \Leftrightarrow D(X) \subseteq Y$
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-Exemple : le théorème de \L o\'s. \\
-On peut le prouver avec une extrême lourdeur dans les institutions en général, mais sa preuve classique est par essence une induction sur les formules. C'est un bon crash-test pour notre théorie.
+\frametitle{Perspectives}
+\pause
 \begin{theorem}[\L o\'s]
 Soit $I$ un ensemble et $\mathcal{U}$ un ultrafiltre sur $I$. Alors pour toute formule $\varphi = \varphi(x_1,...,x_n)$, pour tous $a_1,...,a_n \in \prod_{i\in I} M_i$, on a l'équivalence
 \begin{align*}
  \prod_{i\in I} \mathcal{M}_i / \mathcal{U} \models \varphi(\pi(a_1),...,\pi(a_n)) \Longleftrightarrow ||\varphi(a_1,...,a_n)|| \in \mathcal{U}
 \end{align*}
-\end{theorem}
+\end{theorem} \pause
+Autre question : équivalence clause de Horn / fermeture par produit filtré
 \end{frame}
 
 \begin{frame}
